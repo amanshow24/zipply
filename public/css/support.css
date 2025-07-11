@@ -1,0 +1,95 @@
+.support {
+  padding-block: 2rem;
+  background-color: #f8f9fa;
+  font-family: var(--font-family);
+}
+
+.support__container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-inline: 1.25rem;
+}
+
+.support__title {
+  font-size: 2rem;
+  color: var(--clr-accent);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.support__intro {
+  text-align: center;
+  color: #334155;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.support__section {
+  margin-bottom: 2rem;
+}
+
+.support__section h2 {
+  font-size: 1.2rem;
+  color: var(--clr-primary);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.support__list {
+  list-style: none;
+  padding-left: 1rem;
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.support__list li {
+  margin-bottom: 0.75rem;
+}
+
+.support__contact {
+  list-style: none;
+  padding-left: 0;
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.support__contact li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.support__contact i {
+  font-size: 1.2rem;
+  color: var(--clr-accent);
+  margin-right: 0.5rem;
+}
+
+.support__contact a {
+  color: var(--clr-accent);
+  text-decoration: none;
+}
+
+.support__contact a:hover {
+  text-decoration: underline;
+}
+
+/* ✅ Responsive */
+@media (max-width: 600px) {
+  .support__title {
+    font-size: 1.6rem;
+  }
+
+  .support__section h2 {
+    font-size: 1.05rem;
+  }
+
+  .support__list,
+  .support__contact {
+    font-size: 0.9rem;
+  }
+}

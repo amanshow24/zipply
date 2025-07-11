@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("./partials/head") %>
+  <title>View More - Zipply</title>
+  <link rel="stylesheet" href="/css/viewMore.css" />
+</head>
+<body>
+  <%- include("./partials/nav", { user: user }) %>
+
+  <main class="view">
+    <div class="view__container">
+      <h2 class="view__heading">Short URL Details</h2>
+
+      <div class="view__card">
+        <p>
+          <strong>Short ID:</strong>
+          <a href="<%= baseUrl %>/url/<%= url.shortId %>" target="_blank"><%= url.shortId %></a>
+          <span class="copy-container" data-url="<%= baseUrl %>/url/<%= url.shortId %>">
+            <i class="bi bi-clipboard me-1"></i>
+            <span class="copy-text">Copy</span>
+          </span>
+        </p>
+
+        <p><strong>Original URL:</strong> 
+          <a href="<%= url.redirectURL %>" target="_blank"><%= url.redirectURL %></a>
+        </p>
+
+        <p><strong>Created At:</strong> 
+          <%= new Date(url.createdAt).toLocaleString("en-IN", {
+            day: "numeric", month: "long", year: "numeric",
+            hour: "numeric", minute: "2-digit", second: "2-digit",
+            hour12: true, timeZone: "Asia/Kolkata"
+          }) %>
+        </p>
+
+        <% if (url.expiryDate) { 
+    const expiryDate = new Date(new Date(url.expiryDate).toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+
+          const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
+          const isExpired = now > expiryDate;
+        %>
+          <p><strong>Expiry Date:</strong> 
+            <%= expiryDate.toLocaleString("en-IN", {
+              day: "numeric", month: "long", year: "numeric"
+            }) %>
+            <% if (isExpired) { %>
+              <span class="badge bg-danger ms-2 fw-semibold">Expired</span>
+            <% } else { %>
+              <span class="badge bg-success ms-2 fw-semibold">Active</span>
+            <% } %>
+          </p>
+        <% } else { %>
+          <p><strong>Expiry:</strong> <span class="text-muted">No expiry set</span></p>
+        <% } %>
+
+        <% if (url.visitHistory.length > 0) { %>
+          <p><strong>Last Clicked At:</strong>
+            <%= new Date(url.visitHistory[url.visitHistory.length - 1].timestamp).toLocaleString("en-IN", {
+              day: "numeric", month: "long", year: "numeric",
+              hour: "numeric", minute: "2-digit", second: "2-digit",
+              hour12: true, timeZone: "Asia/Kolkata"
+            }) %>
+          </p>
+        <% } %>
+
+        <%
+          const uniqueDates = new Set(
+            url.visitHistory.map(visit =>
+              new Date(visit.timestamp).toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata" })
+            )
+          );
+        %>
+
+        <p><strong>Total Clicks:</strong> <%= url.visitHistory.length %></p>
+        <p><strong>Unique Active Days:</strong> <%= uniqueDates.size %></p>
+
+        <% if (url.createdBy && url.createdBy.email) { %>
+          <p><strong>Created By:</strong> <%= url.createdBy.email %></p>
+        <% } %>
+      </div>
+
+      <h4 class="view__subheading mt-4">Click History</h4>
+
+      <% if (url.visitHistory.length === 0) { %>
+        <p class="view__muted">No clicks yet.</p>
+      <% } else { %>
+        <ul class="view__history-list">
+          <% url.visitHistory.forEach((visit, index) => { %>
+            <li class="mb-2">
+              <strong><%= index + 1 %>.</strong>
+              Visited at:
+              <%= new Date(visit.timestamp).toLocaleString("en-IN", {
+                day: "numeric", month: "long", year: "numeric",
+                hour: "numeric", minute: "2-digit", second: "2-digit",
+                hour12: true, timeZone: "Asia/Kolkata"
+              }) %><br />
+              <span class="text-muted"><i class="bi bi-laptop"></i> Device/Browser: <%= visit.userAgent || "N/A" %></span>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include("./partials/footer") %>
+  <%- include("./partials/scripts") %>
+</body>
+</html>

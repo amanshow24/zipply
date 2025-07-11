@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("./partials/head") %>
+  <title>About - Zipply</title>
+  <link rel="stylesheet" href="/css/about.css" />
+</head>
+<body>
+  <%- include("./partials/nav") %>
+
+  <main class="about">
+    <div class="about__container">
+      <h1 class="about__title">About Zipply</h1>
+      <p class="about__intro">
+        <strong>Zipply</strong> is a powerful and modern <span>URL Shortener</span> and <span>Barcode/QR Code Generator</span> built for simplicity, performance, and utility.
+      </p>
+
+      <p>
+        It was crafted with ❤️ by <strong>Aman Show</strong>, using a full-stack approach with cutting-edge web technologies like <strong>Node.js</strong>, <strong>Express</strong>, <strong>MongoDB</strong>, <strong>JWT Authentication</strong>, and <strong>Bootstrap</strong> for design.
+      </p>
+
+      <p>
+        Whether you want to trim long links, generate scannable QR codes, or track link analytics—Zipply is designed to help you do it all with speed and reliability.
+      </p>
+
+      <h2 class="about__subheading">Tech Stack</h2>
+      <ul class="about__tech-list">
+        <li><strong>Backend:</strong> Node.js, Express, MongoDB, Mongoose</li>
+        <li><strong>Frontend:</strong> EJS, Bootstrap, Custom CSS</li>
+        <li><strong>Authentication:</strong> JSON Web Tokens (JWT)</li>
+        <li><strong>Extras:</strong> Clipboard copy, QR Code generation, Click tracking</li>
+      </ul>
+
+      <p class="about__end">Zipply is fast, free, and made with care. Start shortening and sharing smarter — today!</p>
+    </div>
+  </main>
+
+  <%- include("./partials/footer") %>
+  <%- include("./partials/scripts") %>
+</body>
+</html>

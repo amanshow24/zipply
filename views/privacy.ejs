@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("./partials/head") %>
+  <title>Privacy Policy - Zipply</title>
+  <link rel="stylesheet" href="/css/privacy.css" />
+</head>
+<body>
+  <%- include("./partials/nav") %>
+
+  <main class="privacy">
+    <div class="privacy__container">
+      <h1 class="privacy__title">Privacy Policy</h1>
+
+      <p>Your privacy is important to us. This Privacy Policy explains how Zipply collects, uses, and protects your data.</p>
+
+      <h2>1. Information We Collect</h2>
+      <p>We collect the following information when you use Zipply:</p>
+      <ul>
+        <li>Email and name (during signup)</li>
+        <li>URLs you shorten</li>
+        <li>Click data: timestamps, visit counts</li>
+        <li>QR Code you generate along with timestamps</li>
+      </ul>
+
+      <h2>2. How We Use Your Data</h2>
+      <p>Your data is used to:</p>
+      <ul>
+        <li>Track analytics and usage patterns</li>
+        <li>Provide link history and dashboard stats</li>
+        <li>Track QR Code History</li>
+
+      </ul>
+
+      <h2>3. Data Storage & Security</h2>
+      <p>We use secure databases (MongoDB) and JWT authentication to protect user data. Passwords are stored in hashed format.</p>
+
+      <h2>4. Third-Party Sharing</h2>
+      <p>Zipply does <strong>not</strong> sell, rent, or share your personal information with third parties.</p>
+
+      <h2>5. Cookies</h2>
+      <p>Zipply does not use any cookies to track users. All sessions and tokens are handled securely using JWT.</p>
+
+      <h2>6. Data Deletion</h2>
+      <p>You can request account deletion by contacting the developer, and your data will be permanently erased.</p>
+
+      <p class="privacy__footer-note">This policy was last updated by <strong>Aman Show</strong>. For privacy-related questions, contact via GitHub or LinkedIn.</p>
+    </div>
+  </main>
+
+  <%- include("./partials/footer") %>
+  <%- include("./partials/scripts") %>
+</body>
+</html>

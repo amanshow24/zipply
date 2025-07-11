@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("./partials/head") %>
+  <title>FAQ - Zipply</title>
+  <link rel="stylesheet" href="/css/faq.css">
+</head>
+<body>
+  <%- include("./partials/nav") %>
+
+  <main class="faq">
+    <div class="faq__container">
+      <h1 class="faq__title">Frequently Asked Questions</h1>
+
+      <div class="faq__accordion">
+        <% const faqs = [
+          { q: "What is Zipply?", a: "Zipply is a fast and secure URL shortener and QR code generator built using Node.js, Express, and MongoDB." },
+          { q: "Is Zipply free to use?", a: "Yes, Zipply is 100% free for all registered users." },
+          { q: "Do shortened URLs expire?", a: "You can optionally set an expiry date while creating a URL. If no date is set, it will remain active indefinitely." },
+          { q: "Can I track link clicks?", a: "Yes, you can track total clicks and see visit history for each shortened URL." },
+          { q: "What happens after I delete a QR?", a: "Deleting a QR only removes it from your history. If someone has already scanned it, it may still redirect or display the encoded content." },
+          { q: "Do I need an account to use Zipply?", a: "Yes, you must be signed in to create, manage, and track your links and QR codes." },
+          { q: "Is my data safe?", a: "Yes. Zipply uses JWT-based authentication and securely stores your data in MongoDB." },
+          { q: "Can I download the QR codes I generate?", a: "Yes! After generation, you can download the QR as a PNG image." },
+          { q: "Who built Zipply?", a: "Zipply was proudly developed by Aman Show using modern web technologies." }
+        ]; %>
+
+        <% faqs.forEach((item, index) => { %>
+          <div class="faq__item">
+            <button class="faq__question" data-index="<%= index %>">
+              <%= item.q %>
+              <i class="bi bi-chevron-down faq__icon"></i>
+            </button>
+            <div class="faq__answer" id="faq-<%= index %>"><%= item.a %></div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </main>
+
+  <%- include("./partials/footer") %>
+  <%- include("./partials/scripts") %>
+</body>
+</html>

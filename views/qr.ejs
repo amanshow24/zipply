@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("./partials/head") %>
+  <title>QR Generator - Zipply</title>
+  <link rel="stylesheet" href="/css/qr.css" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+  <%- include("./partials/nav", { user: user }) %>
+
+  <main class="qr container flex-grow-1">
+    <h1 class="qr__title">QR Code Generator</h1>
+
+    <form action="/qr" method="POST" class="qr__form">
+      <label for="qrText" class="qr__label">Enter text or URL:</label>
+      <input
+        type="text"
+        name="qrText"
+        id="qrText"
+        class="form-control"
+        placeholder="https://example.com or any text"
+        required
+        value="<%= qrText %>"
+      />
+
+      <% if (typeof error !== "undefined" && error) { %>
+        <div class="alert alert-danger mt-2"><%= error %></div>
+      <% } %>
+
+      <button type="submit" class="btn btn-primary mt-3">Generate QR Code</button>
+    </form>
+
+    <% if (qrImage) { %>
+      <div class="qr__image-container text-center">
+        <h5 class="mb-3">Generated QR Code:</h5>
+        <img src="<%= qrImage %>" alt="QR Code" class="img-fluid p-3 border rounded" />
+        <a href="<%= qrImage %>" download="zipply-qr.png" class="btn btn-success mt-3">
+          Download QR Code
+        </a>
+      </div>
+    <% } %>
+
+    <div class="qr__back-btn text-center">
+      <a href="/" class="btn btn-outline-info mt-4">Want to create short URL? →</a>
+    </div>
+
+    <% if (qrHistory && qrHistory.length > 0) { %>
+      <div class="qr__table-container mt-5">
+        <h3 class="mb-3">Your QR Code History</h3>
+        <table class="qr__table">
+          <thead>
+            <tr>
+              <th>S. No</th>
+              <th>Text/URL</th>
+              <th>QR Preview</th>
+              <th>Created At</th>
+              <th>Download</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% qrHistory.forEach((qr, index) => { %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td><%= qr.text %></td>
+                <td><img src="<%= qr.image %>" alt="QR" width="50" /></td>
+                <td>
+                  <%= new Date(qr.createdAt).toLocaleString("en-IN", {
+                    timeZone: "Asia/Kolkata",
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit"
+                  }) %>
+                </td>
+                <td>
+                  <a href="<%= qr.image %>" download="zipply-qr.png" class="btn btn-outline-success btn-sm">Download</a>
+                </td>
+                <td>
+                  <form method="POST" action="/qr/delete/<%= qr._id %>" class="delete-form">
+                    <button type="submit" class="btn btn-outline-danger btn-sm delete-qr-btn">Delete</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <p class="qr__note text-muted mt-3">
+  <strong>Note:</strong> Deleting a QR code from your history removes it from your account, but the QR image or download might still work if someone has scanned or saved it. This is because QR codes directly store the URL or text, not a reference from our database.
+</p>
+
+      </div>
+    <% } %>
+  </main>
+
+  <%- include("./partials/footer") %>
+  <%- include("./partials/scripts") %>
+</body>
+</html>

@@ -1,0 +1,65 @@
+.privacy {
+  padding-block: 2rem;
+  background-color: #f8f9fa;
+  font-family: var(--font-family);
+}
+
+.privacy__container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-inline: 1.25rem;
+}
+
+.privacy__title {
+  font-size: 2rem;
+  color: var(--clr-accent);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.privacy h2 {
+  font-size: 1.2rem;
+  color: var(--clr-primary);
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.privacy p {
+  font-size: 1rem;
+  color: #334155;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.privacy ul {
+  margin-left: 1.25rem;
+  margin-bottom: 1rem;
+  color: #475569;
+  font-size: 0.95rem;
+  list-style: disc;
+}
+
+.privacy__footer-note {
+  font-style: italic;
+  font-size: 0.95rem;
+  margin-top: 2rem;
+  color: #64748b;
+}
+
+/* ✅ Responsive */
+@media (max-width: 600px) {
+  .privacy__title {
+    font-size: 1.6rem;
+  }
+
+  .privacy h2 {
+    font-size: 1.05rem;
+  }
+
+  .privacy p,
+  .privacy ul {
+    font-size: 0.95rem;
+  }
+}

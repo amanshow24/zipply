@@ -1,0 +1,133 @@
+.footer {
+  background-color: var(--clr-primary);
+  color: var(--clr-light);
+  font-family: var(--font-family);
+  padding-top: 2rem;
+  border-top: 1px solid #334155;
+}
+
+.footer__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer__left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.footer__brand {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.footer__slogan {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  font-style: italic;
+}
+
+.footer__social {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer__icon {
+  font-size: 1.25rem;
+  color: var(--clr-light);
+  transition: color var(--transition), transform var(--transition);
+}
+
+.footer__icon:hover,
+.footer__icon:focus {
+  color: var(--clr-accent);
+  transform: scale(1.1);
+  outline: none;
+}
+
+/* Footer links */
+.footer__link {
+  text-decoration: none;
+  color: var(--clr-light);
+  font-size: 0.95rem;
+  transition: color var(--transition), transform var(--transition);
+}
+
+.footer__link:hover,
+.footer__link:focus {
+  color: var(--clr-accent);
+  transform: scale(1.05);
+  text-decoration: none;
+}
+
+.footer__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.footer__bottom {
+  text-align: center;
+  font-size: 0.85rem;
+  padding: 1rem;
+  border-top: 1px solid #334155;
+  color: #cbd5e1;
+}
+
+@media (max-width: 768px) {
+  .footer__container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .footer__right,
+  .footer__left {
+    align-items: center;
+  }
+
+  .footer__links {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .footer__slogan {
+    font-size: 0.85rem;
+  }
+}
+
+
+.footer__link {
+  display: inline-block;
+  color: var(--clr-light);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color var(--transition), transform var(--transition), text-shadow var(--transition);
+  will-change: transform, text-shadow;
+}
+
+.footer__link:hover,
+.footer__link:focus {
+  color: var(--clr-accent);
+  transform: scale(1.05);
+  text-decoration: none;
+  text-shadow: 0 0 8px rgba(56, 189, 248, 0.6); /* Sky blue glow */
+}
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <%- include("./partials/head") %>
+  <title>Signup</title>
+  <link rel="stylesheet" href="/css/signup.css" />
+</head>
+<body>
+  <%- include("./partials/nav") %>
+
+  <main class="signup">
+    <div class="signup__container">
+      <h1 class="signup__title">Signup</h1>
+
+      <% if (typeof error !== 'undefined') { %>
+  <div class="alert alert-danger"><%= error %></div>
+<% } %>
+
+
+
+      <form action="/user" method="post" class="signup__form">
+        <label for="name" class="signup__label">Full Name</label>
+        <input type="text" name="name" id="name" required placeholder="Enter your full name" class="signup__input" />
+
+        <label for="email" class="signup__label">Email</label>
+        <input type="email" name="email" id="email" required placeholder="Enter your email" class="signup__input" />
+
+        <label for="password" class="signup__label">Password</label>
+        <input type="password" name="password" id="password" required placeholder="Create a password" class="signup__input" />
+
+       
+
+        <button type="submit" class="signup__button">Signup</button>
+      </form>
+      <p class="signup__login">
+        Already have an account?
+        <a href="/login">Login here</a>
+      </p>
+    </div>
+  </main>
+
+  <%- include("./partials/footer") %>
+  <%- include("./partials/scripts") %>
+  
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+.team {
+  padding-block: 2.5rem;
+  background-color: #f8f9fa;
+  font-family: var(--font-family);
+}
+
+.team__container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding-inline: 1.25rem;
+  text-align: center;
+}
+
+.team__title {
+  font-size: 2rem;
+  color: var(--clr-accent);
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.team__card {
+  background-color: #ffffff;
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.team__avatar {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--clr-accent);
+  margin-bottom: 1rem;
+}
+
+.team__name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--clr-primary);
+  margin-bottom: 0.25rem;
+}
+
+.team__role {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.team__bio {
+  font-size: 0.95rem;
+  color: #334155;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.team__social {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.team__social a {
+  font-size: 1.25rem;
+  color: var(--clr-primary);
+  transition: color var(--transition);
+}
+
+.team__social a:hover {
+  color: var(--clr-accent);
+}
+
+/* ✅ Responsive */
+@media (max-width: 600px) {
+  .team__title {
+    font-size: 1.6rem;
+  }
+
+  .team__bio {
+    font-size: 0.9rem;
+  }
+
+  .team__name {
+    font-size: 1.2rem;
+  }
+}

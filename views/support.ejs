@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("./partials/head") %>
+  <title>Support - Zipply</title>
+  <link rel="stylesheet" href="/css/support.css" />
+</head>
+<body>
+  <%- include("./partials/nav") %>
+
+  <main class="support">
+    <div class="support__container">
+      <h1 class="support__title">Need Help?</h1>
+      <p class="support__intro">We’re here to assist you with any issues or questions related to Zipply. Check below for solutions or contact the developer directly.</p>
+
+      <section class="support__section">
+        <h2>Common Issues</h2>
+        <ul class="support__list">
+          <li>🔗 Shortened URL not working? Make sure it’s copied correctly and not expired or deleted.</li>
+          <li>📋 Clipboard button not working? Try using a modern browser like Chrome or Edge.</li>
+          <li>🧾 QR Code still working after delete? This is because QR codes directly store the URL or text, not a reference from our database.</li>
+          <li>📉 Lost analytics? Make sure you're logged in with the correct account that created the URL.</li>
+        </ul>
+      </section>
+
+      <section class="support__section">
+        <h2>Contact Developer</h2>
+        <p>If your issue isn’t listed above, reach out directly:</p>
+        <ul class="support__contact">
+          <li>
+            <i class="bi bi-envelope me-2 text-accent"></i>
+            <a href="mailto:amanshow9800@gmail.com">amanshow9800@gmail.com</a>
+          </li>
+          <li>
+            <i class="bi bi-linkedin me-2 text-accent"></i>
+            <a href="https://www.linkedin.com/in/aman-kumar-show-a5589b290" target="_blank">Aman Kumar Show</a>
+          </li>
+          <li>
+            <i class="bi bi-github me-2 text-accent"></i>
+            <a href="https://github.com/amanshow24" target="_blank">@amanshow24</a>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <%- include("./partials/footer") %>
+  <%- include("./partials/scripts") %>
+</body>
+</html>
