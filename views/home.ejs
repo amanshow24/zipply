@@ -73,10 +73,14 @@
           </thead>
           <tbody>
             <% urls.forEach((url, index) => { 
-              const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
-                const expiryDate = url.expiryDate ? new Date(new Date(url.expiryDate).toLocaleString("en-US", { timeZone: "Asia/Kolkata" })) : null;
+             const expiryDate = url.expiryDate ? new Date(url.expiryDate) : null;
+const nowIST = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+const isExpired = expiryDate && new Date(nowIST) > expiryDate;
+const expiryDateIST = expiryDate ? expiryDate.toLocaleString("en-IN", {
+  timeZone: "Asia/Kolkata",
+  day: "numeric", month: "long", year: "numeric"
+}) : null;
 
-              const isExpired = expiryDate && now > expiryDate;
             %>
               <tr>
                 <td><%= index + 1 %></td>
@@ -97,16 +101,17 @@
                   </div>
                 </td>
                 <td>
-                  <% if (expiryDate) { %>
-                    <div><%= expiryDate.toLocaleString("en-IN", { timeZone: "Asia/Kolkata", day: "numeric", month: "long", year: "numeric" }) %></div>
-                    <% if (isExpired) { %>
-                      <span class="badge bg-danger">Expired</span>
-                    <% } else { %>
-                      <span class="badge bg-success">Active</span>
-                    <% } %>
-                  <% } else { %>
-                    <span class="text-muted">No expiry</span>
-                  <% } %>
+              <% if (expiryDateIST) { %>
+  <div><%= expiryDateIST %></div>
+  <% if (isExpired) { %>
+    <span class="badge bg-danger">Expired</span>
+  <% } else { %>
+    <span class="badge bg-success">Active</span>
+  <% } %>
+<% } else { %>
+  <span class="text-muted">No expiry</span>
+<% } %>
+
                 </td>
               </tr>
             <% }) %>
