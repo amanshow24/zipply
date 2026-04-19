@@ -52,7 +52,18 @@ Create a `.env` file in the root directory:
 ```env
 PORT=8010
 MONGODB_URI=your_mongodb_connection_string
-SESSION_SECRET=your_session_secret
+SECRET=your_jwt_secret
+OTP_SESSION_SECRET=optional_separate_secret_for_signup_otp
+BREVO_API_KEY=your_brevo_api_key
+BREVO_FROM_EMAIL=no-reply@yourdomain.com
+FROM_EMAIL=no-reply@yourdomain.com
+APP_NAME=Zipply
+APP_URL=https://yourdomain.com
+BRAND_LOGO_URL=https://yourdomain.com/assets/logo.png
+LEGAL_COMPANY_NAME=Your Company Name
+LEGAL_COMPANY_ADDRESS=Your registered business address
+OTP_ATTEMPT_LIMIT=5
+OTP_LOCKOUT_MS=600000
 ```
 
 ### 4. Start the Server
@@ -86,3 +97,14 @@ This project is licensed under the [MIT License](LICENSE).
 ---
 
 > Built with ❤️ by [Aman Show](https://github.com/amanshow24/)
+
+---
+
+## Email OTP Verification Flow
+
+- Signup now creates a pending registration first.
+- A 6-digit OTP is emailed and valid for 5 minutes.
+- OTP is stored as a hash in DB and can be used only once.
+- User account is created only after successful OTP verification.
+- OTP attempts support temporary lockout after configurable failed attempts.
+- OTP events are stored in audit logs for security tracing.

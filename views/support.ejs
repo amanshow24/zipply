@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <%- include("./partials/head") %>
@@ -8,40 +8,48 @@
 <body>
   <%- include("./partials/nav") %>
 
-  <main class="support">
-    <div class="support__container">
-      <h1 class="support__title">Need Help?</h1>
-      <p class="support__intro">We’re here to assist you with any issues or questions related to Zipply. Check below for solutions or contact the developer directly.</p>
-
-      <section class="support__section">
-        <h2>Common Issues</h2>
-        <ul class="support__list">
-          <li>🔗 Shortened URL not working? Make sure it’s copied correctly and not expired or deleted.</li>
-          <li>📋 Clipboard button not working? Try using a modern browser like Chrome or Edge.</li>
-          <li>🧾 QR Code still working after delete? This is because QR codes directly store the URL or text, not a reference from our database.</li>
-          <li>📉 Lost analytics? Make sure you're logged in with the correct account that created the URL.</li>
-        </ul>
-      </section>
-
-      <section class="support__section">
-        <h2>Contact Developer</h2>
-        <p>If your issue isn’t listed above, reach out directly:</p>
-        <ul class="support__contact">
-          <li>
-            <i class="bi bi-envelope me-2 text-accent"></i>
-            <a href="mailto:amanshow9800@gmail.com">amanshow9800@gmail.com</a>
-          </li>
-          <li>
-            <i class="bi bi-linkedin me-2 text-accent"></i>
-            <a href="https://www.linkedin.com/in/aman-kumar-show-a5589b290" target="_blank">Aman Kumar Show</a>
-          </li>
-          <li>
-            <i class="bi bi-github me-2 text-accent"></i>
-            <a href="https://github.com/amanshow24" target="_blank">@amanshow24</a>
-          </li>
-        </ul>
-      </section>
+  <main class="support container">
+    <div class="page-back-nav">
+      <a href="/" class="page-back-link"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
     </div>
+
+    <section class="support__hero">
+      <p class="support__eyebrow">SUPPORT</p>
+      <h1 class="support__title">We're Here to Help</h1>
+      <p class="support__subtitle">Find answers to common questions or get in touch with our team.</p>
+      <p class="support__ist-clock" data-ist-clock>IST: --</p>
+    </section>
+
+    <section class="support__panel page-panel">
+      <div class="support__content">
+        <p class="support__intro"><strong>Need help with Zipply?</strong> Here are quick answers to the most common issues users face.</p>
+
+        <h2>1. Shortened URL not working</h2>
+        <p>Make sure the link is copied correctly. If the short link is expired or deleted, it will show a 404 page.</p>
+
+        <h2>2. Clipboard button not working</h2>
+        <p>Use a modern browser such as Chrome, Edge, Firefox, or Safari. Clipboard actions may fail in insecure contexts.</p>
+
+        <h2>3. QR code still works after deletion</h2>
+        <p>This is expected. QR codes encode the destination directly, so once generated they can still resolve even if records are deleted from dashboard history.</p>
+
+        <h2>4. Analytics not showing</h2>
+        <p>Check that you're signed in with the same account that created the link. Analytics are account-specific.</p>
+
+        <h2>5. Payment failed</h2>
+        <p>Verify your card or payment method details and try again. Payments are processed via Razorpay, and temporary gateway issues can also cause failures.</p>
+
+        <h2>6. Contact Support</h2>
+        <p>If your issue is still unresolved, contact us via:</p>
+        <ul>
+          <li>Email: <a href="mailto:amanshow9800@gmail.com">amanshow9800@gmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/aman-kumar-show-a5589b290" target="_blank">LinkedIn</a></li>
+          <li><a href="https://github.com/amanshow24" target="_blank">GitHub</a></li>
+        </ul>
+
+        <p class="support__footer"><strong>Support hours:</strong> Responses are usually provided within 24 hours.</p>
+      </div>
+    </section>
   </main>
 
   <%- include("./partials/footer") %>

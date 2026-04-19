@@ -13,7 +13,54 @@
   <%- include("./partials/nav") %>
 
   <main class="home container">
-    <h1 class="home__title">URL Shortener</h1>
+    <% const pageFormData = typeof formData !== "undefined" && formData ? formData : {}; %>
+    <% const pageTodayIST = typeof todayIST !== "undefined" && todayIST ? todayIST : new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date()); %>
+    <% const urlItems = Array.isArray(urls) ? urls : []; %>
+    <% const nowEpoch = Date.now(); %>
+    <% const urlStats = urlItems.reduce((stats, item) => {
+      const expiryDate = item.expiryDate ? new Date(item.expiryDate) : null;
+      const isExpired = expiryDate && nowEpoch > expiryDate.getTime();
+      stats.total += 1;
+      stats.clicks += item.visitHistory.length;
+      if (isExpired) {
+        stats.expired += 1;
+      } else {
+        stats.active += 1;
+      }
+      return stats;
+    }, { total: 0, clicks: 0, active: 0, expired: 0 }); %>
+
+    <div class="page-back-nav">
+      <a href="/" class="page-back-link"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
+    </div>
+
+    <section class="home__hero">
+      <p class="home__eyebrow">Short URL manager</p>
+      <h1 class="home__title">Create clean links that feel polished and easy to share.</h1>
+      <p class="home__subtitle">
+        Paste a long URL, add an optional branded short ID, and keep expiry dates and clicks in one tidy place.
+      </p>
+      <p class="home__ist-clock" data-ist-clock>IST: --</p>
+
+      <div class="home__stats" aria-label="Short URL summary">
+        <div class="home__stat-card">
+          <span class="home__stat-value" id="homeStatSaved"><%= urlStats.total %></span>
+          <span class="home__stat-label">Saved links</span>
+        </div>
+        <div class="home__stat-card">
+          <span class="home__stat-value" id="homeStatClicks"><%= urlStats.clicks %></span>
+          <span class="home__stat-label">Total clicks</span>
+        </div>
+        <div class="home__stat-card">
+          <span class="home__stat-value" id="homeStatActive"><%= urlStats.active %></span>
+          <span class="home__stat-label">Active links</span>
+        </div>
+        <div class="home__stat-card">
+          <span class="home__stat-value" id="homeStatExpired"><%= urlStats.expired %></span>
+          <span class="home__stat-label">Expired links</span>
+        </div>
+      </div>
+    </section>
 
     <% if (typeof success !== "undefined" && success) { %>
       <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -22,91 +69,148 @@
       </div>
     <% } %>
 
-    <form method="POST" action="/url" class="home__form">
-      <label for="url" class="home__label">Enter Your Original URL:</label>
-      <div class="home__form-group">
-        <input type="text" id="url" name="url" placeholder="https://example.com" required />
+    <section class="home__panel page-panel">
+      <div class="home__panel-header">
+        <div>
+          <h2 class="home__section-title">Create a short URL</h2>
+          <p class="home__section-text">Use a custom slug if you want a more recognizable link.</p>
+        </div>
       </div>
 
-      <label for="custom" class="home__label">Custom Short ID (optional):</label>
-      <div class="home__form-group">
-        <input type="text" id="custom" name="custom" placeholder="e.g. aman123" />
-      </div>
-      <div ><p style="font-size: 0.8rem;">Length should be at-least 4</p></div>
+      <form method="POST" action="/url" class="home__form">
+        <div class="home__form-grid">
+          <div class="home__field home__field--wide">
+            <label for="url" class="home__label">Destination URL</label>
+            <input type="text" id="url" name="url" placeholder="https://example.com" required value="<%= pageFormData.url || '' %>" class="home__input" />
+          </div>
 
-      <div class="home__form-group mt-3">
-        <label for="expiry" class="home__label">Expiry Date (optional):</label>
-        <input 
-          type="date" 
-          id="expiry" 
-          name="expiry" 
-          class="form-control"
-          min="<%= new Date().toISOString().split('T')[0] %>" 
-        />
-        <small class="text-muted">Select a future date only</small>
-      </div>
+          <div class="home__field">
+            <label for="custom" class="home__label">Custom Short ID <span class="home__optional">optional</span></label>
+            <input
+              type="text"
+              id="custom"
+              name="custom"
+              placeholder="e.g. aman123"
+              value="<%= pageFormData.custom || '' %>"
+              class="home__input <%= typeof customIdError !== 'undefined' && customIdError ? 'home__input--invalid' : '' %>"
+              aria-invalid="<%= typeof customIdError !== 'undefined' && customIdError ? 'true' : 'false' %>"
+              data-custom-invalid="<%= typeof customIdError !== 'undefined' && customIdError ? customIdErrorType : '' %>"
+            />
+            <p class="home__hint">Custom ID must be unique and at least 4 characters long.</p>
+            <p
+              id="customValidationMsg"
+              class="home__field-error <%= typeof customIdErrorType !== 'undefined' && customIdErrorType === 'duplicate' ? '' : 'home__field-error--hidden' %>"
+              aria-live="polite"
+            >
+              <% if (typeof customIdErrorType !== 'undefined' && customIdErrorType === 'duplicate') { %>
+                This custom ID is already in use. Try another one.
+              <% } %>
+            </p>
+          </div>
 
-      <div class="mt-3">
-        <button type="submit" class="btn btn-primary">Generate</button>
-      </div>
-    </form>
+          <div class="home__field">
+            <label for="expiry" class="home__label">Expiry Date <span class="home__optional">optional</span></label>
+            <input
+              type="date"
+              id="expiry"
+              name="expiry"
+              class="form-control home__date"
+              min="<%= pageTodayIST %>"
+              value="<%= pageFormData.expiry || '' %>"
+            />
+            <p class="home__hint">Select a future date if the link should expire.</p>
+          </div>
+        </div>
+
+        <div class="home__actions">
+          <button type="submit" class="btn btn-primary home__submit-btn">Generate short link</button>
+        </div>
+      </form>
+    </section>
 
     <% if (typeof error !== 'undefined') { %>
       <div class="alert alert-danger mt-3"><%= error %></div>
     <% } %>
 
- <div class="qr__go-btn text-center">
-      <a href="/qr" class="btn btn-outline-info mt-4">Want to create QR/Bar Code? →</a>
-    </div>
+    <% if (urlItems.length > 0) { %>
+      <section class="home__panel home__panel--table page-panel">
+        <div class="home__panel-header home__panel-header--table">
+          <div>
+            <h2 class="home__section-title">Your saved links</h2>
+            <p class="home__section-text">A clear overview of destination URLs, short IDs, click counts, and expiry status.</p>
+          </div>
+          <div class="home__filter-wrap">
+            <label for="urlFilter" class="home__filter-label"><i class="bi bi-funnel"></i> Filter</label>
+            <select id="urlFilter" class="home__filter-select" aria-label="Filter URLs">
+              <option value="all">All URLs</option>
+              <option value="active">Active links</option>
+              <option value="expired">Expired links</option>
+              <option value="with-expiry">Has expiry</option>
+              <option value="no-expiry">No expiry</option>
+              <option value="clicked">Clicked</option>
+              <option value="not-clicked">No clicks</option>
+            </select>
+          </div>
+        </div>
 
-    <% if (locals.urls) { %>
-      <div class="home__table-container mt-4">
-        <table class="home__table">
+        <div class="home__table-container">
+          <table class="home__table">
           <thead>
             <tr>
               <th>S. No</th>
-              <th>Redirect URL</th>
+              <th>Destination URL</th>
               <th>Short ID</th>
               <th>Clicks</th>
               <th>Expiry</th>
             </tr>
           </thead>
           <tbody>
-            <% urls.forEach((url, index) => { 
+            <% urlItems.forEach((url, index) => {
              const expiryDate = url.expiryDate ? new Date(url.expiryDate) : null;
-const nowIST = new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
-const isExpired = expiryDate && new Date(nowIST) > expiryDate;
+const isExpired = expiryDate && nowEpoch > expiryDate.getTime();
 const expiryDateIST = expiryDate ? expiryDate.toLocaleString("en-IN", {
   timeZone: "Asia/Kolkata",
   day: "numeric", month: "long", year: "numeric"
 }) : null;
-
+const shortLink = `${baseUrl}/url/${url.shortId}`;
             %>
-              <tr>
+              <tr
+                class="home__url-row"
+                data-filter-status="<%= isExpired ? 'expired' : 'active' %>"
+                data-filter-expiry="<%= expiryDateIST ? 'with-expiry' : 'no-expiry' %>"
+                data-filter-clicks="<%= url.visitHistory.length > 0 ? 'clicked' : 'not-clicked' %>"
+                data-expiry-epoch="<%= expiryDate ? expiryDate.getTime() : '' %>"
+              >
                 <td><%= index + 1 %></td>
-                <td><a href="<%= url.redirectURL %>" target="_blank"><%= url.redirectURL %></a></td>
                 <td>
-                  <a href="<%= baseUrl %>/url/<%= url.shortId %>" target="_blank"><%= url.shortId %></a>
-                  <span class="copy-container" data-url="<%= baseUrl %>/url/<%= url.shortId %>">
-                    <i class="bi bi-clipboard"></i> <span class="copy-text">Copy</span>
-                  </span>
+                  <a class="home__table-link" href="<%= url.redirectURL %>" target="_blank" rel="noreferrer noopener">
+                    <span><%= url.redirectURL %></span>
+                  </a>
                 </td>
                 <td>
-                  <div><%= url.visitHistory.length %></div>
-                  <div><a href="/view/<%= url.shortId %>" class="view-more-btn">View More</a></div>
-                  <div class="mt-1">
+                  <div class="home__short-link-row">
+                    <a class="home__short-link" href="<%= shortLink %>" target="_blank" rel="noreferrer noopener"><%= url.shortId %></a>
+                    <span class="copy-container" data-url="<%= shortLink %>">
+                      <i class="bi bi-clipboard"></i> <span class="copy-text">Copy</span>
+                    </span>
+                  </div>
+                </td>
+                <td class="home__clicks-cell">
+                  <span class="home__click-count"><%= url.visitHistory.length %></span>
+                  <div class="home__table-actions">
+                    <a href="/view/<%= url.shortId %>" class="view-more-btn">View more</a>
                     <form method="POST" action="/url/delete/<%= url._id %>" class="delete-form">
-                      <button type="submit" class="btn btn-danger btn-sm delete-btn">Delete</button>
+                      <button type="submit" class="btn btn-outline-danger btn-sm delete-btn">Delete</button>
                     </form>
                   </div>
                 </td>
-                <td>
+                <td class="home__expiry-cell">
               <% if (expiryDateIST) { %>
-  <div><%= expiryDateIST %></div>
+  <div class="home__expiry-date"><%= expiryDateIST %></div>
   <% if (isExpired) { %>
-    <span class="badge bg-danger">Expired</span>
+    <span class="badge bg-danger home__expiry-badge" data-expiry-badge>Expired</span>
   <% } else { %>
-    <span class="badge bg-success">Active</span>
+    <span class="badge bg-success home__expiry-badge" data-expiry-badge>Active</span>
   <% } %>
 <% } else { %>
   <span class="text-muted">No expiry</span>
@@ -116,8 +220,18 @@ const expiryDateIST = expiryDate ? expiryDate.toLocaleString("en-IN", {
               </tr>
             <% }) %>
           </tbody>
-        </table>
-      </div>
+          </table>
+        </div>
+        <p class="home__filter-empty" id="urlFilterEmpty" hidden>No URLs match this filter.</p>
+      </section>
+    <% } else { %>
+      <section class="home__panel home__empty page-panel">
+        <div class="home__empty-icon">
+          <i class="bi bi-link-45deg"></i>
+        </div>
+        <h2 class="home__section-title">No short links yet</h2>
+        <p class="home__section-text">Generate your first link above. It will appear here with click tracking, expiry status, and copy controls.</p>
+      </section>
     <% } %>
   </main>
 

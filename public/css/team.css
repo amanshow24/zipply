@@ -1,86 +1,197 @@
+/* ========== TEAM PAGE STYLING ========== */
+
 .team {
-  padding-block: 2.5rem;
-  background-color: #f8f9fa;
-  font-family: var(--font-family);
-}
-
-.team__container {
-  max-width: 700px;
+  padding: 3rem 1rem;
+  max-width: 1000px;
   margin: 0 auto;
-  padding-inline: 1.25rem;
-  text-align: center;
 }
 
-.team__title {
-  font-size: 2rem;
-  color: var(--clr-accent);
-  font-weight: 700;
+.page-back-nav {
   margin-bottom: 2rem;
 }
 
-.team__card {
-  background-color: #ffffff;
-  padding: 2rem 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+.page-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: transform 0.2s ease;
 }
 
-.team__avatar {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid var(--clr-accent);
-  margin-bottom: 1rem;
+.page-back-link:hover {
+  transform: translateX(-5px);
 }
 
-.team__name {
-  font-size: 1.4rem;
+.team__hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.team__eyebrow {
+  font-size: 0.875rem;
+  color: #667eea;
   font-weight: 600;
-  color: var(--clr-primary);
-  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
 }
 
-.team__role {
-  color: #64748b;
-  font-size: 0.95rem;
+.team__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
   margin-bottom: 1rem;
 }
 
-.team__bio {
-  font-size: 0.95rem;
-  color: #334155;
+.team__subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.team__ist-clock {
+  font-size: 0.875rem;
+  color: #999;
+  font-family: inherit;
+}
+
+.team__panel {
+  background: white;
+  border-radius: 12px;
+  padding: 3rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   line-height: 1.6;
+}
+
+.team__content h2 {
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.team__content h2:first-child {
+  margin-top: 0;
+}
+
+.team__content p {
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.team__content ul {
   margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
 }
 
-.team__social {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
+.team__content li {
+  margin-bottom: 0.5rem;
+  color: #444;
 }
 
-.team__social a {
-  font-size: 1.25rem;
-  color: var(--clr-primary);
-  transition: color var(--transition);
+.team__content strong {
+  color: #1a1a1a;
 }
 
-.team__social a:hover {
-  color: var(--clr-accent);
+.team__content a {
+  color: #667eea;
+  text-decoration: none;
 }
 
-/* ✅ Responsive */
-@media (max-width: 600px) {
+.team__content a:hover {
+  text-decoration: underline;
+}
+
+.team__intro {
+  font-size: 1.1rem;
+  margin-bottom: 2rem !important;
+}
+
+.team__footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .team {
+    padding: 2rem 0.75rem;
+  }
+
+  .team__hero {
+    margin-bottom: 1.2rem;
+  }
+
+  .team__panel {
+    padding: 2rem;
+  }
+
   .team__title {
-    font-size: 1.6rem;
+    font-size: 2rem;
   }
 
-  .team__bio {
+  .team__subtitle {
+    font-size: 0.96rem;
+    line-height: 1.62;
+  }
+
+  .team__ist-clock {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .team {
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+  }
+
+  .team__panel {
+    padding: 1.1rem;
+  }
+
+  .team__title {
+    font-size: 1.5rem;
+  }
+
+  .team__subtitle {
     font-size: 0.9rem;
+    line-height: 1.55;
   }
 
-  .team__name {
-    font-size: 1.2rem;
+  .team__content h2 {
+    font-size: 1.18rem;
+    margin: 1.35rem 0 0.7rem;
+  }
+
+  .team__content p,
+  .team__content li,
+  .team__footer {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .page-back-link {
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .team__title {
+    font-size: 1.35rem;
+  }
+
+  .team__panel {
+    padding: 0.95rem;
+  }
+
+  .team__content h2 {
+    font-size: 1.08rem;
   }
 }

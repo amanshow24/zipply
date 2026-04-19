@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <%- include("./partials/head") %>
+  <title>Dashboard - Zipply</title>
+  <link rel="stylesheet" href="/css/dashboard.css" />
+</head>
+<body>
+  <%- include("./partials/nav") %>
+
+  <main class="dashboard">
+    <section class="dashboard__hero">
+      <p class="dashboard__eyebrow">Welcome, <span class="dashboard__name"><%= dashboardName || 'User' %></span></p>
+      <h1 class="dashboard__title">Choose Your Tool</h1>
+      <p class="dashboard__subtitle">Start by selecting what you want to create today.</p>
+    </section>
+
+    <section class="dashboard__grid">
+      <a href="/short-url" class="dashboard__card">
+        <span class="dashboard__icon"><i class="bi bi-link-45deg"></i></span>
+        <h2 class="dashboard__card-title">Short URL</h2>
+        <p class="dashboard__card-text">Generate and manage custom short links with click tracking.</p>
+        <span class="dashboard__cta">Open Short URL <i class="bi bi-arrow-right"></i></span>
+      </a>
+
+      <a href="/qr" class="dashboard__card">
+        <span class="dashboard__icon"><i class="bi bi-qr-code"></i></span>
+        <h2 class="dashboard__card-title">Bar Code / QR</h2>
+        <p class="dashboard__card-text">Create scannable QR codes for links or text and keep history.</p>
+        <span class="dashboard__cta">Open QR Tools <i class="bi bi-arrow-right"></i></span>
+      </a>
+    </section>
+
+    <p class="dashboard__billing-note">
+      Need to upgrade? <a href="/billing" class="dashboard__billing-link">Billing & Plans</a>
+    </p>
+  </main>
+
+  <%- include("./partials/footer") %>
+  <%- include("./partials/scripts") %>
+</body>
+</html>

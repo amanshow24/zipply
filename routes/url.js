@@ -9,14 +9,11 @@ const {
 
 const router = express.Router();
 
-// 🔒 Ensure all routes here have req.user available
-router.use(checkForAuthentication);
+router.post("/", checkForAuthentication, restrictTo(["NORMAL"]), handleGenerateNewShortURL);
 
-router.post("/", handleGenerateNewShortURL);
+router.get("/analytics/:shortId", checkForAuthentication, restrictTo(["NORMAL"]), handleGetAnalytics);
 
-router.get("/analytics/:shortId", handleGetAnalytics);
-
-router.post("/delete/:id", async (req, res) => {
+router.post("/delete/:id", checkForAuthentication, restrictTo(["NORMAL"]), async (req, res) => {
   const { id } = req.params;
 
   const url = await URL.findOne({ _id: id });
@@ -29,7 +26,7 @@ router.post("/delete/:id", async (req, res) => {
   }
 
   await URL.deleteOne({ _id: id });
-  return res.redirect("/");
+  return res.redirect("/short-url");
 });
 
 module.exports = router;

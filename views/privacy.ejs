@@ -8,44 +8,79 @@
 <body>
   <%- include("./partials/nav") %>
 
-  <main class="privacy">
-    <div class="privacy__container">
-      <h1 class="privacy__title">Privacy Policy</h1>
-
-      <p>Your privacy is important to us. This Privacy Policy explains how Zipply collects, uses, and protects your data.</p>
-
-      <h2>1. Information We Collect</h2>
-      <p>We collect the following information when you use Zipply:</p>
-      <ul>
-        <li>Email and name (during signup)</li>
-        <li>URLs you shorten</li>
-        <li>Click data: timestamps, visit counts</li>
-        <li>QR Code you generate along with timestamps</li>
-      </ul>
-
-      <h2>2. How We Use Your Data</h2>
-      <p>Your data is used to:</p>
-      <ul>
-        <li>Track analytics and usage patterns</li>
-        <li>Provide link history and dashboard stats</li>
-        <li>Track QR Code History</li>
-
-      </ul>
-
-      <h2>3. Data Storage & Security</h2>
-      <p>We use secure databases (MongoDB) and JWT authentication to protect user data. Passwords are stored in hashed format.</p>
-
-      <h2>4. Third-Party Sharing</h2>
-      <p>Zipply does <strong>not</strong> sell, rent, or share your personal information with third parties.</p>
-
-      <h2>5. Cookies</h2>
-      <p>Zipply does not use any cookies to track users. All sessions and tokens are handled securely using JWT.</p>
-
-      <h2>6. Data Deletion</h2>
-      <p>You can request account deletion by contacting the developer, and your data will be permanently erased.</p>
-
-      <p class="privacy__footer-note">This policy was last updated by <strong>Aman Show</strong>. For privacy-related questions, contact via GitHub or LinkedIn.</p>
+  <main class="privacy container">
+    <div class="page-back-nav">
+      <a href="/" class="page-back-link"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
     </div>
+
+    <section class="privacy__hero">
+      <p class="privacy__eyebrow">PRIVACY</p>
+      <h1 class="privacy__title">Privacy Policy</h1>
+      <p class="privacy__subtitle">How Zipply collects, uses, and protects your information.</p>
+      <p class="privacy__ist-clock" data-ist-clock>IST: --</p>
+    </section>
+
+    <section class="privacy__panel page-panel">
+      <div class="privacy__content">
+        <p class="privacy__intro"><strong>Your privacy is important to us.</strong> This Privacy Policy explains how Zipply collects, uses, and protects your data. Please read it carefully.</p>
+
+        <h2>1. Information We Collect</h2>
+        <p>When you use Zipply, we collect the following information:</p>
+        <ul>
+          <li>Email address and name during account signup</li>
+          <li>URLs you shorten and QR codes you generate</li>
+          <li>Click data: timestamps, visit counts, device information, and browser details</li>
+          <li>Usage patterns and subscription details</li>
+        </ul>
+
+        <h2>2. How We Use Your Data</h2>
+        <p>Your data is used exclusively to:</p>
+        <ul>
+          <li>Provide and improve Zipply services</li>
+          <li>Track analytics and generate click history for your links</li>
+          <li>Display dashboard statistics and link management features</li>
+          <li>Enforce subscription plan limits and daily usage tracking</li>
+          <li>Send service-related notifications and updates</li>
+        </ul>
+
+        <h2>3. Data Storage & Security</h2>
+        <p>We take security seriously. All data is encrypted and stored in secure MongoDB databases. We use JWT authentication for sessions and hash all passwords using industry-standard algorithms. Your personal information is protected by multiple layers of security.</p>
+
+        <h2>4. Third-Party Sharing</h2>
+        <p>Zipply <strong>does not</strong> sell, rent, or share your personal data with third parties for marketing or any other purpose. Your data remains yours and yours alone.</p>
+
+        <h2>5. Cookies & Tracking</h2>
+        <p>Zipply does not use cookies to track users. All sessions are handled securely through JWT tokens stored in your browser's local storage. We do not engage in any form of cross-site tracking.</p>
+
+        <h2>6. Payment Information</h2>
+        <p>All payments are processed securely through Razorpay. Zipply does not store or have direct access to your payment card details. Razorpay's privacy policies apply to payment data.</p>
+
+        <h2>7. Data Retention</h2>
+        <p>We retain your data as long as your account is active. If you delete your account, your data will be permanently removed from our systems within 30 days.</p>
+
+        <h2>8. Your Rights</h2>
+        <p>You have the right to:</p>
+        <ul>
+          <li>Access all data associated with your account</li>
+          <li>Request correction of inaccurate information</li>
+          <li>Request deletion of your account and all associated data</li>
+          <li>Opt-out of non-essential communications</li>
+        </ul>
+
+        <h2>9. Changes to This Policy</h2>
+        <p>Zipply may update this Privacy Policy from time to time. Significant changes will be communicated to users via email. Continued use of Zipply after updates constitutes your acceptance of the updated policy.</p>
+
+        <h2>10. Contact Us</h2>
+        <p>If you have questions about this Privacy Policy or how your data is handled, please contact us via:</p>
+        <ul>
+          <li><a href="https://github.com/amanshow24" target="_blank">GitHub</a></li>
+          <li><a href="https://linkedin.com/in/aman-kumar-show-a5589b290/" target="_blank">LinkedIn</a></li>
+          <li>Email: amanshow9800@gmail.com</li>
+        </ul>
+
+        <p class="privacy__footer"><strong>Last updated:</strong> April 2026. By using Zipply, you acknowledge that you have read and understood this Privacy Policy.</p>
+      </div>
+    </section>
   </main>
 
   <%- include("./partials/footer") %>

@@ -8,34 +8,55 @@
 <body>
   <%- include("./partials/nav") %>
 
-  <main class="faq">
-    <div class="faq__container">
-      <h1 class="faq__title">Frequently Asked Questions</h1>
-
-      <div class="faq__accordion">
-        <% const faqs = [
-          { q: "What is Zipply?", a: "Zipply is a fast and secure URL shortener and QR code generator built using Node.js, Express, and MongoDB." },
-          { q: "Is Zipply free to use?", a: "Yes, Zipply is 100% free for all registered users." },
-          { q: "Do shortened URLs expire?", a: "You can optionally set an expiry date while creating a URL. If no date is set, it will remain active indefinitely." },
-          { q: "Can I track link clicks?", a: "Yes, you can track total clicks and see visit history for each shortened URL." },
-          { q: "What happens after I delete a QR?", a: "Deleting a QR only removes it from your history. If someone has already scanned it, it may still redirect or display the encoded content." },
-          { q: "Do I need an account to use Zipply?", a: "Yes, you must be signed in to create, manage, and track your links and QR codes." },
-          { q: "Is my data safe?", a: "Yes. Zipply uses JWT-based authentication and securely stores your data in MongoDB." },
-          { q: "Can I download the QR codes I generate?", a: "Yes! After generation, you can download the QR as a PNG image." },
-          { q: "Who built Zipply?", a: "Zipply was proudly developed by Aman Show using modern web technologies." }
-        ]; %>
-
-        <% faqs.forEach((item, index) => { %>
-          <div class="faq__item">
-            <button class="faq__question" data-index="<%= index %>">
-              <%= item.q %>
-              <i class="bi bi-chevron-down faq__icon"></i>
-            </button>
-            <div class="faq__answer" id="faq-<%= index %>"><%= item.a %></div>
-          </div>
-        <% }) %>
-      </div>
+  <main class="faq container">
+    <div class="page-back-nav">
+      <a href="/" class="page-back-link"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
     </div>
+
+    <section class="faq__hero">
+      <p class="faq__eyebrow">FAQ</p>
+      <h1 class="faq__title">Frequently Asked Questions</h1>
+      <p class="faq__subtitle">Quick answers about links, QR codes, plans, analytics, and account flow.</p>
+      <p class="faq__ist-clock" data-ist-clock>IST: --</p>
+    </section>
+
+    <section class="faq__panel page-panel">
+      <div class="faq__content">
+        <p class="faq__intro"><strong>Need help using Zipply?</strong> These are the most common questions based on the current product flow.</p>
+
+        <h2>1. Is Zipply free to use?</h2>
+        <p>Yes. The Normal plan is free and includes 3 short URLs and 2 QR codes per day.</p>
+
+        <h2>2. What are the paid plan limits?</h2>
+        <p>Pro allows 10 short URLs and 10 QR codes per day. Plus allows 25 short URLs and 25 QR codes per day.</p>
+
+        <h2>3. When do daily limits reset?</h2>
+        <p>Daily usage limits reset at midnight IST (Asia/Kolkata).</p>
+
+        <h2>4. Do I need an account?</h2>
+        <p>Yes. Signup and email OTP verification are required to create and manage links and QR codes.</p>
+
+        <h2>5. Can I set expiry on short links?</h2>
+        <p>Yes. You can set an expiry date while creating a short URL. Expired links stop redirecting.</p>
+
+        <h2>6. Can I track clicks and history?</h2>
+        <p>Yes. Zipply provides click counts and history details in your dashboard for each short link.</p>
+
+        <h2>7. Can I use custom short IDs?</h2>
+        <p>Yes. You can choose your own short ID if it is available and valid.</p>
+
+        <h2>8. What happens if I delete a link or QR?</h2>
+        <p>Deleted items are removed from your dashboard history and cannot be recovered.</p>
+
+        <h2>9. Which payment gateway is used?</h2>
+        <p>Plan upgrades are processed through Razorpay.</p>
+
+        <h2>10. How can I contact support?</h2>
+        <p>For help, visit <a href="/support">Support</a> or email <a href="mailto:amanshow9800@gmail.com">amanshow9800@gmail.com</a>.</p>
+
+        <p class="faq__footer"><strong>Last updated:</strong> April 2026.</p>
+      </div>
+    </section>
   </main>
 
   <%- include("./partials/footer") %>

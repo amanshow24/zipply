@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include("./partials/head") %>
+  <title>QR Content - Zipply</title>
+  <link rel="stylesheet" href="/css/qrResolve.css" />
+</head>
+<body>
+  <%- include("./partials/nav", { user: user }) %>
+
+  <main class="qr-resolve container">
+    <div class="page-back-nav">
+      <a href="/" class="page-back-link"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
+    </div>
+
+    <section class="qr-resolve__hero">
+      <p class="qr-resolve__eyebrow">QR text content</p>
+      <h1 class="qr-resolve__title">This QR code contains plain text.</h1>
+      <p class="qr-resolve__subtitle">Copy or review the scanned content below.</p>
+      <p class="qr-resolve__ist-clock" data-ist-clock>IST: --</p>
+    </section>
+
+    <section class="qr-resolve__panel page-panel" aria-labelledby="qr-resolve-content-title">
+      <div class="qr-resolve__panel-head">
+        <h2 id="qr-resolve-content-title" class="qr-resolve__heading">Scanned text</h2>
+        <button type="button" class="qr-resolve__copy-btn" data-qr-resolve-copy data-copy-value="<%= qrText %>">
+          <i class="bi bi-clipboard"></i>
+          <span class="qr-resolve__copy-label">Copy</span>
+        </button>
+      </div>
+      <pre class="qr-resolve__content"><%= qrText %></pre>
+    </section>
+  </main>
+
+  <%- include("./partials/footer") %>
+  <%- include("./partials/scripts") %>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <%- include("./partials/head") %>
+  <title>Verify Email | Zipply</title>
+  <link rel="stylesheet" href="/css/verifyEmail.css" />
+</head>
+<body>
+  <%- include("./partials/nav") %>
+
+  <main class="verify-email">
+    <section class="verify-email__container">
+      <h1 class="verify-email__title">Verify Your Email</h1>
+      <p class="verify-email__subtitle">
+        We sent a 6-digit OTP to
+        <strong><%= emailMasked %></strong>.
+      </p>
+      <p class="verify-email__note">
+        OTP is valid for 5 minutes, can be used only once, and old OTPs become invalid when a new one is generated.
+      </p>
+
+      <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-danger" role="alert"><%= error %></div>
+      <% } %>
+
+      <% if (typeof success !== 'undefined' && success) { %>
+        <div class="alert alert-success" role="alert"><%= success %></div>
+      <% } %>
+
+      <form action="/user/verify-email" method="post" class="verify-email__form" autocomplete="off">
+        <label for="otp" class="verify-email__label">Enter 6-digit OTP</label>
+        <input
+          type="text"
+          id="otp"
+          name="otp"
+          inputmode="numeric"
+          pattern="[0-9]{6}"
+          minlength="6"
+          maxlength="6"
+          required
+          class="verify-email__input"
+          placeholder="000000"
+          value="<%= formData && formData.otp ? formData.otp : '' %>"
+        />
+        <button type="submit" class="verify-email__button">Verify & Continue</button>
+      </form>
+
+      <p class="verify-email__delivery-note">
+        If you do not see the OTP in your inbox, please check your spam or promotions folder.
+      </p>
+    </section>
+  </main>
+
+  <%- include("./partials/footer") %>
+  <%- include("./partials/scripts") %>
+</body>
+</html>

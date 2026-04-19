@@ -8,31 +8,57 @@
 <body>
   <%- include("./partials/nav") %>
 
-  <main class="about">
-    <div class="about__container">
-      <h1 class="about__title">About Zipply</h1>
-      <p class="about__intro">
-        <strong>Zipply</strong> is a powerful and modern <span>URL Shortener</span> and <span>Barcode/QR Code Generator</span> built for simplicity, performance, and utility.
-      </p>
-
-      <p>
-        It was crafted with ❤️ by <strong>Aman Show</strong>, using a full-stack approach with cutting-edge web technologies like <strong>Node.js</strong>, <strong>Express</strong>, <strong>MongoDB</strong>, <strong>JWT Authentication</strong>, and <strong>Bootstrap</strong> for design.
-      </p>
-
-      <p>
-        Whether you want to trim long links, generate scannable QR codes, or track link analytics—Zipply is designed to help you do it all with speed and reliability.
-      </p>
-
-      <h2 class="about__subheading">Tech Stack</h2>
-      <ul class="about__tech-list">
-        <li><strong>Backend:</strong> Node.js, Express, MongoDB, Mongoose</li>
-        <li><strong>Frontend:</strong> EJS, Bootstrap, Custom CSS</li>
-        <li><strong>Authentication:</strong> JSON Web Tokens (JWT)</li>
-        <li><strong>Extras:</strong> Clipboard copy, QR Code generation, Click tracking</li>
-      </ul>
-
-      <p class="about__end">Zipply is fast, free, and made with care. Start shortening and sharing smarter — today!</p>
+  <main class="about container">
+    <div class="page-back-nav">
+      <a href="/" class="page-back-link"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
     </div>
+
+    <section class="about__hero">
+      <p class="about__eyebrow">ABOUT</p>
+      <h1 class="about__title">About Zipply</h1>
+      <p class="about__subtitle">Built to make link sharing, QR generation, and analytics simple, fast, and reliable.</p>
+      <p class="about__ist-clock" data-ist-clock>IST: --</p>
+    </section>
+
+    <section class="about__panel page-panel">
+      <div class="about__content">
+        <p class="about__intro"><strong>Zipply is a smart URL shortener and QR platform.</strong> It helps individuals and teams create short links, generate QR codes, and track performance in one clean dashboard.</p>
+
+        <h2>1. What Zipply Does</h2>
+        <p>Zipply allows you to create shortened URLs, generate QR codes, monitor click analytics, and manage link history from a single account. Every action is designed for speed and simplicity.</p>
+
+        <h2>2. Plans That Match Real Usage</h2>
+        <p>Zipply currently offers three plans:</p>
+        <ul>
+          <li><strong>Normal (Free):</strong> 3 short URLs + 2 QR codes per day</li>
+          <li><strong>Pro:</strong> 10 short URLs + 10 QR codes per day</li>
+          <li><strong>Plus:</strong> 25 short URLs + 25 QR codes per day</li>
+        </ul>
+        <p>Usage limits reset daily at midnight IST so tracking remains consistent for all users.</p>
+
+        <h2>3. Built for Current Workflow</h2>
+        <p>The platform includes email OTP verification, secure JWT authentication, click tracking, QR history, and dashboard-level usage visibility so users can understand performance without extra tools.</p>
+
+        <h2>4. Tech Stack</h2>
+        <p>Zipply is built with Node.js, Express, MongoDB, EJS, and Bootstrap, with Razorpay integration for plan upgrades.</p>
+
+        <h2>5. Security & Privacy</h2>
+        <p>Passwords are hashed, sessions are token-based, and user data is protected through secure backend validation and access control.</p>
+
+        <h2>6. Mission</h2>
+        <p>Our goal is to provide a reliable link and QR platform that stays easy for beginners but powerful enough for real production use.</p>
+
+        <h2>7. Contact</h2>
+        <p>For feedback, support, or collaboration, connect via:</p>
+        <ul>
+          <li>Email: <a href="mailto:amanshow9800@gmail.com">amanshow9800@gmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/aman-kumar-show-a5589b290" target="_blank">LinkedIn</a></li>
+          <li><a href="https://github.com/amanshow24" target="_blank">GitHub</a></li>
+        </ul>
+
+        <p class="about__footer"><strong>Built by:</strong> Aman Show. <strong>Last updated:</strong> April 2026.</p>
+      </div>
+    </section>
   </main>
 
   <%- include("./partials/footer") %>

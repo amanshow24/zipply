@@ -5,93 +5,164 @@
   <title>QR Generator - Zipply</title>
   <link rel="stylesheet" href="/css/qr.css" />
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body>
   <%- include("./partials/nav", { user: user }) %>
 
-  <main class="qr container flex-grow-1">
-    <h1 class="qr__title">QR Code Generator</h1>
+  <main class="qr container">
+    <% const qrItems = Array.isArray(qrHistory) ? qrHistory : []; %>
+    <% const nowISTDate = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date()); %>
+    <% const nowISTMonth = new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", month: "2-digit", year: "numeric" }).format(new Date()); %>
+    <% const qrStats = qrItems.reduce((stats, item) => {
+      const createdAt = new Date(item.createdAt);
+      const itemDateIST = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata", year: "numeric", month: "2-digit", day: "2-digit" }).format(createdAt);
+      const itemMonthIST = new Intl.DateTimeFormat("en-IN", { timeZone: "Asia/Kolkata", month: "2-digit", year: "numeric" }).format(createdAt);
+      if (itemDateIST === nowISTDate) stats.today += 1;
+      if (itemMonthIST === nowISTMonth) stats.month += 1;
+      return stats;
+    }, { today: 0, month: 0 }); %>
+    <% const latestQR = qrItems.length ? qrItems[qrItems.length - 1] : null; %>
 
-    <form action="/qr" method="POST" class="qr__form">
-      <label for="qrText" class="qr__label">Enter text or URL:</label>
-      <input
-        type="text"
-        name="qrText"
-        id="qrText"
-        class="form-control"
-        placeholder="https://example.com or any text"
-        required
-        value="<%= qrText %>"
-      />
-
-      <% if (typeof error !== "undefined" && error) { %>
-        <div class="alert alert-danger mt-2"><%= error %></div>
-      <% } %>
-
-      <button type="submit" class="btn btn-primary mt-3">Generate QR Code</button>
-    </form>
-
-    <% if (qrImage) { %>
-      <div class="qr__image-container text-center">
-        <h5 class="mb-3">Generated QR Code:</h5>
-        <img src="<%= qrImage %>" alt="QR Code" class="img-fluid p-3 border rounded" />
-        <a href="<%= qrImage %>" download="zipply-qr.png" class="btn btn-success mt-3">
-          Download QR Code
-        </a>
-      </div>
-    <% } %>
-
-    <div class="qr__back-btn text-center">
-      <a href="/" class="btn btn-outline-info mt-4">Want to create short URL? →</a>
+    <div class="page-back-nav">
+      <a href="/" class="page-back-link"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
     </div>
 
-    <% if (qrHistory && qrHistory.length > 0) { %>
-      <div class="qr__table-container mt-5">
-        <h3 class="mb-3">Your QR Code History</h3>
-        <table class="qr__table">
-          <thead>
-            <tr>
-              <th>S. No</th>
-              <th>Text/URL</th>
-              <th>QR Preview</th>
-              <th>Created At</th>
-              <th>Download</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% qrHistory.forEach((qr, index) => { %>
-              <tr>
-                <td><%= index + 1 %></td>
-                <td><%= qr.text %></td>
-                <td><img src="<%= qr.image %>" alt="QR" width="50" /></td>
-                <td>
-                  <%= new Date(qr.createdAt).toLocaleString("en-IN", {
-                    timeZone: "Asia/Kolkata",
-                    day: "2-digit",
-                    month: "short",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit"
-                  }) %>
-                </td>
-                <td>
-                  <a href="<%= qr.image %>" download="zipply-qr.png" class="btn btn-outline-success btn-sm">Download</a>
-                </td>
-                <td>
-                  <form method="POST" action="/qr/delete/<%= qr._id %>" class="delete-form">
-                    <button type="submit" class="btn btn-outline-danger btn-sm delete-qr-btn">Delete</button>
-                  </form>
-                </td>
-              </tr>
-            <% }) %>
-          </tbody>
-        </table>
-        <p class="qr__note text-muted mt-3">
-  <strong>Note:</strong> Deleting a QR code from your history removes it from your account, but the QR image or download might still work if someone has scanned or saved it. This is because QR codes directly store the URL or text, not a reference from our database.
-</p>
+    <section class="qr__hero">
+      <p class="qr__eyebrow">QR workspace</p>
+      <h1 class="qr__title">Generate scannable QR codes with a clean, reliable workflow.</h1>
+      <p class="qr__subtitle">Create QR codes for links or plain text, download them instantly, and manage your full generation history in one place.</p>
+      <p class="qr__ist-clock" data-ist-clock>IST: --</p>
 
+      <div class="qr__stats" aria-label="QR summary">
+        <div class="qr__stat-card">
+          <span class="qr__stat-value"><%= qrItems.length %></span>
+          <span class="qr__stat-label">Total generated</span>
+        </div>
+        <div class="qr__stat-card">
+          <span class="qr__stat-value"><%= qrStats.today %></span>
+          <span class="qr__stat-label">Created today</span>
+        </div>
+        <div class="qr__stat-card">
+          <span class="qr__stat-value"><%= qrStats.month %></span>
+          <span class="qr__stat-label">This month</span>
+        </div>
+        <div class="qr__stat-card">
+          <span class="qr__stat-value"><%= latestQR ? "Yes" : "No" %></span>
+          <span class="qr__stat-label">Recent activity</span>
+        </div>
       </div>
+    </section>
+
+    <section class="qr__panel page-panel" aria-labelledby="qr-create-title">
+      <div class="qr__panel-header">
+        <div>
+          <h2 id="qr-create-title" class="qr__section-title">Create QR code</h2>
+          <p class="qr__section-text">Paste any URL or text below. Your generated code will be saved to your personal history.</p>
+        </div>
+      </div>
+
+      <form action="/qr" method="POST" class="qr__form">
+        <label for="qrText" class="qr__label">Text or URL</label>
+        <input
+          type="text"
+          name="qrText"
+          id="qrText"
+          class="qr__input"
+          placeholder="https://example.com or any text"
+          required
+          value="<%= qrText %>"
+        />
+
+        <% if (typeof error !== "undefined" && error) { %>
+          <p class="qr__error" role="alert"><i class="bi bi-exclamation-triangle-fill"></i> <%= error %></p>
+        <% } %>
+
+        <button type="submit" class="btn btn-primary qr__submit-btn">
+          <i class="bi bi-qr-code"></i>
+          Generate QR Code
+        </button>
+      </form>
+    </section>
+
+    <% if (qrImage) { %>
+      <section class="qr__result page-panel" aria-labelledby="qr-result-title">
+        <h3 id="qr-result-title" class="qr__section-title">Latest generated QR</h3>
+        <div class="qr__image-container text-center">
+          <img src="<%= qrImage %>" alt="QR Code" class="img-fluid qr__image" />
+          <a href="<%= qrImage %>" download="zipply-qr.png" class="btn btn-success qr__download-btn">
+            <i class="bi bi-download"></i>
+            Download QR Code
+          </a>
+        </div>
+      </section>
     <% } %>
+
+    <section class="qr__panel qr__panel--history page-panel" aria-labelledby="qr-history-title">
+      <div class="qr__panel-header qr__panel-header--history">
+        <div>
+          <h3 id="qr-history-title" class="qr__section-title">Your QR code history</h3>
+          <p class="qr__section-text">Review previously generated codes, download them again, or remove entries from your account.</p>
+        </div>
+        <span class="qr__history-count"><%= qrItems.length %> saved</span>
+      </div>
+
+      <% if (qrItems.length > 0) { %>
+        <div class="qr__table-wrap">
+          <table class="qr__table">
+            <thead>
+              <tr>
+                <th>S. No</th>
+                <th>Text / URL</th>
+                <th>Preview</th>
+                <th>Created At (IST)</th>
+                <th>Download</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% qrItems.forEach((qr, index) => { %>
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td class="qr__text-cell" title="<%= qr.text %>"><%= qr.text %></td>
+                  <td>
+                    <img src="<%= qr.image %>" alt="QR preview" class="qr__mini-image" />
+                  </td>
+                  <td>
+                    <%= new Date(qr.createdAt).toLocaleString("en-IN", {
+                      timeZone: "Asia/Kolkata",
+                      day: "2-digit",
+                      month: "short",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit"
+                    }) %>
+                  </td>
+                  <td>
+                    <a href="<%= qr.image %>" download="zipply-qr.png" class="btn btn-outline-success btn-sm">
+                      <i class="bi bi-download"></i>
+                      Download
+                    </a>
+                  </td>
+                  <td>
+                    <form method="POST" action="/qr/delete/<%= qr._id %>" class="delete-form">
+                      <button type="submit" class="btn btn-outline-danger btn-sm delete-qr-btn">
+                        <i class="bi bi-trash3"></i>
+                        Delete
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="qr__note">
+          <strong>Note:</strong> Deleting a QR code removes it from your account history and disables future scans for QR codes generated through this workspace.
+        </p>
+      <% } else { %>
+        <p class="qr__empty-state">No QR codes yet. Generate your first one above to start building your history.</p>
+      <% } %>
+    </section>
   </main>
 
   <%- include("./partials/footer") %>

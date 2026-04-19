@@ -5,6 +5,17 @@ const qrSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  resolverId: {
+    type: String,
+    unique: true,
+    sparse: true,
+    index: true,
+  },
+  dataType: {
+    type: String,
+    enum: ["url", "text"],
+    default: "text",
+  },
   image: {
     type: String, // base64 Data URL
     required: true,

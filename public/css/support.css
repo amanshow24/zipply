@@ -1,95 +1,197 @@
+/* ========== SUPPORT PAGE STYLING ========== */
+
 .support {
-  padding-block: 2rem;
-  background-color: #f8f9fa;
-  font-family: var(--font-family);
+  padding: 3rem 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-.support__container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding-inline: 1.25rem;
+.page-back-nav {
+  margin-bottom: 2rem;
+}
+
+.page-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: transform 0.2s ease;
+}
+
+.page-back-link:hover {
+  transform: translateX(-5px);
+}
+
+.support__hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.support__eyebrow {
+  font-size: 0.875rem;
+  color: #667eea;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
 }
 
 .support__title {
-  font-size: 2rem;
-  color: var(--clr-accent);
+  font-size: 2.5rem;
   font-weight: 700;
+  color: #1a1a1a;
   margin-bottom: 1rem;
-  text-align: center;
 }
 
-.support__intro {
-  text-align: center;
-  color: #334155;
-  font-size: 1rem;
-  margin-bottom: 2rem;
-  line-height: 1.5;
+.support__subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 0.5rem;
 }
 
-.support__section {
-  margin-bottom: 2rem;
+.support__ist-clock {
+  font-size: 0.875rem;
+  color: #999;
+  font-family: inherit;
 }
 
-.support__section h2 {
-  font-size: 1.2rem;
-  color: var(--clr-primary);
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-}
-
-.support__list {
-  list-style: none;
-  padding-left: 1rem;
-  color: #475569;
-  font-size: 0.95rem;
+.support__panel {
+  background: white;
+  border-radius: 12px;
+  padding: 3rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   line-height: 1.6;
 }
 
-.support__list li {
-  margin-bottom: 0.75rem;
+.support__content h2 {
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f0f0f0;
 }
 
-.support__contact {
-  list-style: none;
-  padding-left: 0;
-  color: #475569;
-  font-size: 0.95rem;
-  line-height: 1.8;
+.support__content h2:first-child {
+  margin-top: 0;
 }
 
-.support__contact li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.75rem;
+.support__content p {
+  color: #444;
+  margin-bottom: 1rem;
 }
 
-.support__contact i {
-  font-size: 1.2rem;
-  color: var(--clr-accent);
-  margin-right: 0.5rem;
+.support__content ul {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
 }
 
-.support__contact a {
-  color: var(--clr-accent);
+.support__content li {
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.support__content strong {
+  color: #1a1a1a;
+}
+
+.support__content a {
+  color: #667eea;
   text-decoration: none;
 }
 
-.support__contact a:hover {
+.support__content a:hover {
   text-decoration: underline;
 }
 
-/* ✅ Responsive */
-@media (max-width: 600px) {
+.support__intro {
+  font-size: 1.1rem;
+  margin-bottom: 2rem !important;
+}
+
+.support__footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .support {
+    padding: 2rem 0.75rem;
+  }
+
+  .support__hero {
+    margin-bottom: 1.2rem;
+  }
+
+  .support__panel {
+    padding: 2rem;
+  }
+
   .support__title {
-    font-size: 1.6rem;
+    font-size: 2rem;
   }
 
-  .support__section h2 {
-    font-size: 1.05rem;
+  .support__subtitle {
+    font-size: 0.96rem;
+    line-height: 1.62;
   }
 
-  .support__list,
-  .support__contact {
+  .support__ist-clock {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .support {
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+  }
+
+  .support__panel {
+    padding: 1.1rem;
+  }
+
+  .support__title {
+    font-size: 1.5rem;
+  }
+
+  .support__subtitle {
     font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .support__content h2 {
+    font-size: 1.18rem;
+    margin: 1.35rem 0 0.7rem;
+  }
+
+  .support__content p,
+  .support__content li,
+  .support__footer {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .page-back-link {
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .support__title {
+    font-size: 1.35rem;
+  }
+
+  .support__panel {
+    padding: 0.95rem;
+  }
+
+  .support__content h2 {
+    font-size: 1.08rem;
   }
 }

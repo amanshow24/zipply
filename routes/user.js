@@ -1,10 +1,19 @@
 const express = require("express");
-const { handleUserSignup, handleUserLogin } = require("../controllers/user");
+const {
+  handleUserSignup,
+  handleUserLogin,
+  handleVerifyEmailOtp,
+} = require("../controllers/user");
+const {
+  signupRateLimit,
+  verifyOtpRateLimit,
+} = require("../middlewares/rateLimit/authOtp");
 
 const router = express.Router();
 
-router.post("/", handleUserSignup);
+router.post("/", signupRateLimit, handleUserSignup);
 router.post("/login", handleUserLogin);
+router.post("/verify-email", verifyOtpRateLimit, handleVerifyEmailOtp);
 
 
 router.get("/logout", (req, res) => {

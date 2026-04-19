@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <%- include("./partials/head") %>
@@ -8,32 +8,98 @@
 <body>
   <%- include("./partials/nav") %>
 
-  <main class="terms">
-    <div class="terms__container">
-      <h1 class="terms__title">Terms & Conditions</h1>
-
-      <p>Welcome to <strong>Zipply</strong>. By using our services, you agree to the following terms and conditions. Please read them carefully.</p>
-
-      <h2>1. Use of the Service</h2>
-      <p>Zipply is a free tool for shortening URLs and generating QR codes. You agree not to use Zipply for any illegal, harmful, or unethical purposes, including but not limited to phishing, spamming, malware distribution, or impersonation.</p>
-
-      <h2>2. Account & Access</h2>
-      <p>Some features require you to register. You are responsible for keeping your login credentials secure and agree not to share your account access with others.</p>
-
-      <h2>3. Data & Analytics</h2>
-      <p>We store shortened URLs, click history, and basic analytics (like timestamps). We do not collect or store any personal browsing data beyond what you provide during signup or usage.</p>
-
-      <h2>4. Link Removal</h2>
-      <p>Zipply reserves the right to remove or block any shortened URLs that violate these terms or are reported as harmful. Admins may remove links without notice.</p>
-
-      <h2>5. Limitation of Liability</h2>
-      <p>Zipply is provided “as is” without warranties of any kind. We are not liable for any losses or damages resulting from the use or misuse of the service.</p>
-
-      <h2>6. Updates to Terms</h2>
-      <p>These terms may be updated periodically. Continued use of Zipply after updates constitutes acceptance of the revised terms.</p>
-
-      <p class="terms__footer-note">For any questions regarding these terms, feel free to reach out to Aman Show via GitHub or LinkedIn.</p>
+  <main class="terms container">
+    <div class="page-back-nav">
+      <a href="/" class="page-back-link"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
     </div>
+
+    <section class="terms__hero">
+      <p class="terms__eyebrow">Legal</p>
+      <h1 class="terms__title">Terms & Conditions</h1>
+      <p class="terms__subtitle">The rules that keep Zipply safe and fair for everyone.</p>
+      <p class="terms__ist-clock" data-ist-clock>IST: --</p>
+    </section>
+
+    <section class="terms__panel page-panel">
+      <div class="terms__content">
+        <p class="terms__intro"><strong>Welcome to Zipply.</strong> By accessing and using our service, you agree to comply with the following terms and conditions. Please read them carefully before proceeding.</p>
+
+        <h2>1. Service Overview</h2>
+        <p>Zipply is a web application that allows registered users to create shortened URLs, generate QR codes, and track usage analytics. The service is provided on an "as-is" basis with flexible subscription tiers (Free, Pro, Plus).</p>
+
+        <h2>2. Acceptable Use</h2>
+        <p>You agree to use Zipply only for legitimate purposes. You will not use Zipply to:</p>
+        <ul>
+          <li>Create shortened URLs that redirect to phishing, malware, or harmful content</li>
+          <li>Spam, harass, or deceive users through misleading shortened links</li>
+          <li>Violate any laws, regulations, or third-party intellectual property rights</li>
+          <li>Attempt to breach security, gain unauthorized access, or disrupt service</li>
+          <li>Generate content that is illegal, offensive, or violates our abuse policies</li>
+        </ul>
+        <p>Zipply reserves the right to immediately remove links, suspend accounts, or ban users who violate these terms.</p>
+
+        <h2>3. Account Registration & Security</h2>
+        <p>To use Zipply, you must:</p>
+        <ul>
+          <li>Create an account with a valid email address</li>
+          <li>Verify your email using the OTP sent to you</li>
+          <li>Keep your login credentials secure and confidential</li>
+          <li>Not share your account with others or allow unauthorized access</li>
+        </ul>
+        <p>You are solely responsible for all activities under your account. Notify us immediately of any unauthorized access.</p>
+
+        <h2>4. Subscription Plans & Billing</h2>
+        <p><strong>Plan Tiers:</strong> Zipply offers three subscription levels:</p>
+        <ul>
+          <li><strong>Normal (Free):</strong> 3 short URLs + 2 QR codes per day, forever free</li>
+          <li><strong>Pro:</strong> Rs 199/month for 10 short URLs + 10 QR codes per day</li>
+          <li><strong>Plus:</strong> Rs 299/month for 25 short URLs + 25 QR codes per day</li>
+        </ul>
+        <p><strong>Daily Limits:</strong> Usage limits reset daily at midnight IST (Asia/Kolkata timezone). Once exhausted, you cannot create new links or QR codes until the next day.</p>
+        <p><strong>Subscription Validity:</strong> Paid plans are valid for exactly 30 days from activation. After expiry, your account automatically reverts to the Normal (Free) plan.</p>
+        <p><strong>Plan Changes:</strong> You may upgrade to a higher tier anytime. Downgrading or changing plans is only possible after your current plan expires.</p>
+        <p><strong>Payments:</strong> All payments are processed through Razorpay in test mode. By upgrading, you authorize payment and agree to Razorpay's terms.</p>
+        <p><strong>No Refunds:</strong> Subscription fees are non-refundable. Cancellations take effect at plan expiry.</p>
+
+        <h2>5. Shortened URLs & QR Codes</h2>
+        <p><strong>Ownership:</strong> You own all shortened URLs and QR codes you create. We are not responsible for the destination content.</p>
+        <p><strong>Expiry:</strong> URLs can have optional expiry dates. After expiry, the short link no longer redirects. Deletion is immediate upon your request.</p>
+        <p><strong>Deletion:</strong> When you delete a shortened URL or QR code, it is immediately disabled and cannot be recovered. Links created by others using your custom IDs remain active unless individually deleted.</p>
+        <p><strong>Link Removal:</strong> Zipply reserves the right to remove or disable any links that contain illegal, harmful, or abusive content.</p>
+
+        <h2>6. Content & Click History</h2>
+        <p>Zipply tracks and displays click counts, visitor device information, timestamps (IST), and browser details for your links. This data is visible only to you and is used for analytics purposes only.</p>
+
+        <h2>7. Limitation of Liability</h2>
+        <p>Zipply is provided "as-is" without any warranties. Specifically, Zipply is not liable for:</p>
+        <ul>
+          <li>Data loss, corruption, or unauthorized access despite security measures</li>
+          <li>Service interruptions, downtime, or technical failures</li>
+          <li>Third-party content, malware, or harmful destinations you link to</li>
+          <li>Indirect, incidental, or consequential damages from service use</li>
+        </ul>
+        <p>To the fullest extent permitted by law, Zipply's liability is limited to zero.</p>
+
+        <h2>8. Intellectual Property</h2>
+        <p>All content, code, design, and trademarks on Zipply belong to Aman Show or are licensed for use. You may not reproduce, distribute, or create derivative works without explicit permission.</p>
+
+        <h2>9. Termination</h2>
+        <p>Zipply may suspend or terminate your account if you violate these terms, engage in abuse, or pose a security risk. Upon termination, your access to all data is revoked and accounts cannot be reinstated.</p>
+
+        <h2>10. Changes to Terms</h2>
+        <p>Zipply may update these terms at any time. Changes take effect immediately upon posting. Continued use of Zipply after updates constitutes your acceptance of the new terms.</p>
+
+        <h2>11. Contact & Support</h2>
+        <p>For questions about these terms or Zipply services, contact <strong>Aman Show</strong> via:</p>
+        <ul>
+          <li><a href="https://github.com/amanshow24" target="_blank">GitHub</a></li>
+          <li><a href="https://linkedin.com/in/aman-kumar-show-a5589b290/" target="_blank">LinkedIn</a></li>
+          <li>Email: amanshow9800@gmail.com</li>
+        </ul>
+
+        <p class="terms__footer"><strong>Last updated:</strong> April 2026. By using Zipply, you acknowledge that you have read, understood, and agree to be bound by these terms.</p>
+      </div>
+    </section>
   </main>
 
   <%- include("./partials/footer") %>

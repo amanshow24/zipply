@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <%- include("./partials/head") %>
-  <title>Signup</title>
+  <title>Signup | Zipply</title>
   <link rel="stylesheet" href="/css/signup.css" />
 </head>
 <body>
@@ -16,20 +16,44 @@
       <h1 class="signup__title">Signup</h1>
 
       <% if (typeof error !== 'undefined') { %>
-  <div class="alert alert-danger"><%= error %></div>
-<% } %>
+        <div class="alert alert-danger" role="alert">
+          <% if (typeof errors !== 'undefined' && errors.length > 1) { %>
+            <ul class="mb-0 ps-3">
+              <% errors.forEach((errMsg) => { %>
+                <li><%= errMsg %></li>
+              <% }) %>
+            </ul>
+          <% } else { %>
+            <%= error %>
+          <% } %>
+        </div>
+      <% } %>
 
 
 
       <form action="/user" method="post" class="signup__form">
         <label for="name" class="signup__label">Full Name</label>
-        <input type="text" name="name" id="name" required placeholder="Enter your full name" class="signup__input" />
+        <input type="text" name="name" id="name" required placeholder="Enter your full name" class="signup__input" value="<%= (typeof formData !== 'undefined' && formData && formData.name) ? formData.name : '' %>" />
 
         <label for="email" class="signup__label">Email</label>
-        <input type="email" name="email" id="email" required placeholder="Enter your email" class="signup__input" />
+        <input type="email" name="email" id="email" required placeholder="Enter your email" class="signup__input" value="<%= (typeof formData !== 'undefined' && formData && formData.email) ? formData.email : '' %>" />
 
         <label for="password" class="signup__label">Password</label>
-        <input type="password" name="password" id="password" required placeholder="Create a password" class="signup__input" />
+        <div class="password-field">
+          <input type="password" name="password" id="password" required minlength="4" placeholder="Create a password" class="signup__input password-input" />
+          <button type="button" class="password-toggle" data-toggle-password="password" aria-label="Toggle password visibility">
+            <i class="bi bi-eye" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <label for="confirmPassword" class="signup__label">Confirm Password</label>
+        <div class="password-field">
+          <input type="password" name="confirmPassword" id="confirmPassword" required minlength="4" placeholder="Confirm your password" class="signup__input password-input" />
+          <button type="button" class="password-toggle" data-toggle-password="confirmPassword" aria-label="Toggle confirm password visibility">
+            <i class="bi bi-eye" aria-hidden="true"></i>
+          </button>
+        </div>
+        <small class="password-error" id="passwordMatchError"></small>
 
        
 

@@ -10,96 +10,124 @@
 
   <main class="view">
     <div class="view__container">
-      <h2 class="view__heading">Short URL Details</h2>
-
-      <div class="view__card">
-        <p>
-          <strong>Short ID:</strong>
-          <a href="<%= baseUrl %>/url/<%= url.shortId %>" target="_blank"><%= url.shortId %></a>
-          <span class="copy-container" data-url="<%= baseUrl %>/url/<%= url.shortId %>">
-            <i class="bi bi-clipboard me-1"></i>
-            <span class="copy-text">Copy</span>
-          </span>
-        </p>
-
-        <p><strong>Original URL:</strong> 
-          <a href="<%= url.redirectURL %>" target="_blank"><%= url.redirectURL %></a>
-        </p>
-
-        <p><strong>Created At:</strong> 
-          <%= new Date(url.createdAt).toLocaleString("en-IN", {
-            day: "numeric", month: "long", year: "numeric",
-            hour: "numeric", minute: "2-digit", second: "2-digit",
-            hour12: true, timeZone: "Asia/Kolkata"
-          }) %>
-        </p>
-
-        <% if (url.expiryDate) { 
-    const expiryDate = new Date(new Date(url.expiryDate).toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
-
-          const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
-          const isExpired = now > expiryDate;
-        %>
-          <p><strong>Expiry Date:</strong> 
-            <%= expiryDate.toLocaleString("en-IN", {
-              day: "numeric", month: "long", year: "numeric"
-            }) %>
-            <% if (isExpired) { %>
-              <span class="badge bg-danger ms-2 fw-semibold">Expired</span>
-            <% } else { %>
-              <span class="badge bg-success ms-2 fw-semibold">Active</span>
-            <% } %>
-          </p>
-        <% } else { %>
-          <p><strong>Expiry:</strong> <span class="text-muted">No expiry set</span></p>
-        <% } %>
-
-        <% if (url.visitHistory.length > 0) { %>
-          <p><strong>Last Clicked At:</strong>
-            <%= new Date(url.visitHistory[url.visitHistory.length - 1].timestamp).toLocaleString("en-IN", {
-              day: "numeric", month: "long", year: "numeric",
-              hour: "numeric", minute: "2-digit", second: "2-digit",
-              hour12: true, timeZone: "Asia/Kolkata"
-            }) %>
-          </p>
-        <% } %>
-
-        <%
-          const uniqueDates = new Set(
-            url.visitHistory.map(visit =>
-              new Date(visit.timestamp).toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata" })
-            )
-          );
-        %>
-
-        <p><strong>Total Clicks:</strong> <%= url.visitHistory.length %></p>
-        <p><strong>Unique Active Days:</strong> <%= uniqueDates.size %></p>
-
-        <% if (url.createdBy && url.createdBy.email) { %>
-          <p><strong>Created By:</strong> <%= url.createdBy.email %></p>
-        <% } %>
+      <div class="page-back-nav view__back-nav">
+        <a href="/short-url" class="page-back-link"><i class="bi bi-arrow-left"></i> Back to Short URL</a>
       </div>
 
-      <h4 class="view__subheading mt-4">Click History</h4>
+      <section class="view__hero">
+        <p class="view__eyebrow">Link details</p>
+        <h2 class="view__heading">Short URL Details</h2>
+        <p class="view__subtitle">Review the destination, copy the share link, and inspect the click history without leaving the same workflow.</p>
+        <p class="view__ist-clock" data-ist-clock>IST: --</p>
+      </section>
 
-      <% if (url.visitHistory.length === 0) { %>
-        <p class="view__muted">No clicks yet.</p>
-      <% } else { %>
-        <ul class="view__history-list">
-          <% url.visitHistory.forEach((visit, index) => { %>
-            <li class="mb-2">
-              <strong><%= index + 1 %>.</strong>
-              Visited at:
-              <%= new Date(visit.timestamp).toLocaleString("en-IN", {
+      <section class="view__card page-panel">
+        <% const shortLink = `${baseUrl}/url/${url.shortId}`; %>
+        <% const expiryDate = url.expiryDate ? new Date(url.expiryDate) : null; %>
+        <% const isExpired = expiryDate && Date.now() > expiryDate.getTime(); %>
+        <% const uniqueDates = new Set(
+          url.visitHistory.map(visit =>
+            new Date(visit.timestamp).toLocaleDateString("en-IN", { timeZone: "Asia/Kolkata" })
+          )
+        ); %>
+
+        <div class="view__grid">
+          <div class="view__main-info">
+            <div class="view__label-row">
+              <span class="view__label">Short ID</span>
+              <span class="copy-container" data-url="<%= shortLink %>">
+                <i class="bi bi-clipboard me-1"></i>
+                <span class="copy-text">Copy</span>
+              </span>
+            </div>
+            <a class="view__primary-link" href="<%= shortLink %>" target="_blank" rel="noreferrer noopener"><%= url.shortId %></a>
+            <p class="view__helper-text">This is the shareable short link for the destination below.</p>
+          </div>
+
+          <div class="view__metrics">
+            <div class="view__metric-card">
+              <span class="view__metric-value"><%= url.visitHistory.length %></span>
+              <span class="view__metric-label">Total clicks</span>
+            </div>
+            <div class="view__metric-card">
+              <span class="view__metric-value"><%= uniqueDates.size %></span>
+              <span class="view__metric-label">Active days</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="view__details-grid">
+          <div class="view__detail-item">
+            <span class="view__detail-label">Original URL</span>
+            <a class="view__detail-value view__detail-link" href="<%= url.redirectURL %>" target="_blank" rel="noreferrer noopener"><%= url.redirectURL %></a>
+          </div>
+
+          <div class="view__detail-item">
+            <span class="view__detail-label">Created At</span>
+            <span class="view__detail-value">
+              <%= new Date(url.createdAt).toLocaleString("en-IN", {
                 day: "numeric", month: "long", year: "numeric",
                 hour: "numeric", minute: "2-digit", second: "2-digit",
                 hour12: true, timeZone: "Asia/Kolkata"
-              }) %><br />
-              <span class="text-muted"><i class="bi bi-laptop"></i> Device/Browser: <%= visit.userAgent || "N/A" %></span>
-            </li>
-          <% }) %>
-        </ul>
-      <% } %>
+              }) %>
+            </span>
+          </div>
+
+          <div class="view__detail-item">
+            <span class="view__detail-label">Expiry</span>
+            <% if (expiryDate) { %>
+              <span class="view__detail-value" data-view-expiry data-expiry-epoch="<%= expiryDate.getTime() %>">
+                <%= expiryDate.toLocaleString("en-IN", {
+                  day: "numeric", month: "long", year: "numeric"
+                }) %>
+                <% if (isExpired) { %>
+                  <span class="badge bg-danger ms-2 fw-semibold" data-view-expiry-badge>Expired</span>
+                <% } else { %>
+                  <span class="badge bg-success ms-2 fw-semibold" data-view-expiry-badge>Active</span>
+                <% } %>
+              </span>
+            <% } else { %>
+              <span class="view__detail-value text-muted">No expiry set</span>
+            <% } %>
+          </div>
+
+          <% if (url.createdBy && url.createdBy.email) { %>
+            <div class="view__detail-item">
+              <span class="view__detail-label">Created By</span>
+              <span class="view__detail-value"><%= url.createdBy.email %></span>
+            </div>
+          <% } %>
+        </div>
+      </section>
+
+      <section class="view__history-section page-panel">
+        <div class="view__section-head">
+          <h4 class="view__subheading">Click History</h4>
+          <span class="view__history-count"><%= url.visitHistory.length %> events</span>
+        </div>
+
+        <% if (url.visitHistory.length === 0) { %>
+          <p class="view__muted">No clicks yet.</p>
+        <% } else { %>
+          <ul class="view__history-list">
+            <% url.visitHistory.forEach((visit, index) => { %>
+              <li class="view__history-item">
+                <div class="view__history-index"><%= index + 1 %></div>
+                <div class="view__history-content">
+                  <p class="view__history-time">
+                    <%= new Date(visit.timestamp).toLocaleString("en-IN", {
+                      day: "numeric", month: "long", year: "numeric",
+                      hour: "numeric", minute: "2-digit", second: "2-digit",
+                      hour12: true, timeZone: "Asia/Kolkata"
+                    }) %>
+                  </p>
+                  <p class="view__history-meta"><i class="bi bi-laptop"></i> <%= visit.userAgent || "N/A" %></p>
+                </div>
+              </li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </section>
     </div>
   </main>
 

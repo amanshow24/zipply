@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <%- include("./partials/head") %>
@@ -8,25 +8,51 @@
 <body>
   <%- include("./partials/nav") %>
 
-  <main class="team">
-    <div class="team__container">
-      <h1 class="team__title">Meet the Creator</h1>
-
-      <div class="team__card">
-        <img src="/images/aman.jpg" alt="Aman Show" class="team__avatar" />
-        <h2 class="team__name">Aman Show</h2>
-        <p class="team__role">Developer & Designer</p>
-        <p class="team__bio">
-          I’m a passionate full-stack developer and the solo creator of <strong>Zipply</strong> — a URL shortener and QR code generator app built with Node.js, Express, MongoDB, JWT, and Bootstrap.
-        </p>
-        <div class="team__social">
-          <a href="https://github.com/amanshow24" target="_blank" aria-label="GitHub"><i class="bi bi-github"></i></a>
-          <a href="https://www.linkedin.com/in/aman-kumar-show-a5589b290/" target="_blank" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-          <a href="https://www.instagram.com/aman_a_18" target="_blank" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-          <a href="mailto:amanshow9800@gmail.com" aria-label="Email"><i class="bi bi-envelope-fill"></i></a>
-        </div>
-      </div>
+  <main class="team container">
+    <div class="page-back-nav">
+      <a href="/" class="page-back-link"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
     </div>
+
+    <section class="team__hero">
+      <p class="team__eyebrow">TEAM</p>
+      <h1 class="team__title">Meet the Team</h1>
+      <p class="team__subtitle">Built and maintained by a focused solo creator, with quality and reliability at the center.</p>
+      <p class="team__ist-clock" data-ist-clock>IST: --</p>
+    </section>
+
+    <section class="team__panel page-panel">
+      <div class="team__content">
+        <p class="team__intro"><strong>Zipply is currently built by a solo developer.</strong> The product is developed end-to-end with focus on performance, clean UX, and practical features that users actually need.</p>
+
+        <h2>1. Founder</h2>
+        <p><strong>Aman Show</strong> - Founder and Full-Stack Developer.</p>
+
+        <h2>2. What Drives the Team</h2>
+        <p>The team philosophy is simple: build useful tools, keep interfaces clean, and prioritize reliability over unnecessary complexity.</p>
+
+        <h2>3. Areas of Ownership</h2>
+        <ul>
+          <li>Backend architecture with Node.js, Express, and MongoDB</li>
+          <li>Authentication and account security with OTP + JWT flow</li>
+          <li>Subscription and payments workflow with Razorpay</li>
+          <li>Frontend product experience with EJS and responsive CSS</li>
+        </ul>
+
+        <h2>4. Product Vision</h2>
+        <p>Continue improving Zipply into a dependable platform for short links, QR workflows, and analytics, while maintaining fast performance and clear usability.</p>
+
+        <h2>5. Connect</h2>
+        <p>Connect with the team via:</p>
+        <ul>
+          <li><a href="https://github.com/amanshow24" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/aman-kumar-show-a5589b290/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/aman_a_18" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li>Email: <a href="mailto:amanshow9800@gmail.com">amanshow9800@gmail.com</a></li>
+        </ul>
+
+        <p class="team__footer"><strong>Last updated:</strong> April 2026.</p>
+      </div>
+    </section>
   </main>
 
   <%- include("./partials/footer") %>

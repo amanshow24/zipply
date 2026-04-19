@@ -1,79 +1,197 @@
+/* ========== ABOUT PAGE STYLING ========== */
+
 .about {
-  padding-block: 2rem;
-  background-color: #f8f9fa;
-  font-family: var(--font-family);
+  padding: 3rem 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-.about__container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding-inline: 1.25rem;
+.page-back-nav {
+  margin-bottom: 2rem;
+}
+
+.page-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  transition: transform 0.2s ease;
+}
+
+.page-back-link:hover {
+  transform: translateX(-5px);
+}
+
+.about__hero {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.about__eyebrow {
+  font-size: 0.875rem;
+  color: #667eea;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
 }
 
 .about__title {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  color: var(--clr-accent);
-  margin-bottom: 1.25rem;
-  text-align: center;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+.about__subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.about__ist-clock {
+  font-size: 0.875rem;
+  color: #999;
+  font-family: inherit;
+}
+
+.about__panel {
+  background: white;
+  border-radius: 12px;
+  padding: 3rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  line-height: 1.6;
+}
+
+.about__content h2 {
+  font-size: 1.5rem;
+  color: #1a1a1a;
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.about__content h2:first-child {
+  margin-top: 0;
+}
+
+.about__content p {
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.about__content ul {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.about__content li {
+  margin-bottom: 0.5rem;
+  color: #444;
+}
+
+.about__content strong {
+  color: #1a1a1a;
+}
+
+.about__content a {
+  color: #667eea;
+  text-decoration: none;
+}
+
+.about__content a:hover {
+  text-decoration: underline;
 }
 
 .about__intro {
   font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem !important;
 }
 
-.about__intro span {
-  color: var(--clr-warning);
-  font-weight: bold;
-}
-
-.about p {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  line-height: 1.6;
-  color: #334155;
-}
-
-.about__subheading {
-  margin-top: 2rem;
-  font-size: 1.25rem;
-  color: var(--clr-primary);
-  font-weight: 600;
-}
-
-.about__tech-list {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.about__tech-list li {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid #e2e8f0;
-  color: #475569;
-}
-
-.about__end {
-  margin-top: 2rem;
-  font-weight: 500;
-  color: #1e293b;
+.about__footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+  font-size: 0.9rem;
+  color: #666;
   text-align: center;
 }
 
-/* ✅ Responsive */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  .about {
+    padding: 2rem 0.75rem;
+  }
+
+  .about__hero {
+    margin-bottom: 1.2rem;
+  }
+
+  .about__panel {
+    padding: 2rem;
+  }
+
   .about__title {
-    font-size: 1.6rem;
+    font-size: 2rem;
   }
 
-  .about__subheading {
-    font-size: 1.1rem;
+  .about__subtitle {
+    font-size: 0.96rem;
+    line-height: 1.62;
   }
 
-  .about__tech-list li {
-    font-size: 0.95rem;
+  .about__ist-clock {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    padding-left: 0.65rem;
+    padding-right: 0.65rem;
+  }
+
+  .about__panel {
+    padding: 1.1rem;
+  }
+
+  .about__title {
+    font-size: 1.5rem;
+  }
+
+  .about__subtitle {
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .about__content h2 {
+    font-size: 1.18rem;
+    margin: 1.35rem 0 0.7rem;
+  }
+
+  .about__content p,
+  .about__content li,
+  .about__footer {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .page-back-link {
+    font-size: 0.88rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .about__title {
+    font-size: 1.35rem;
+  }
+
+  .about__panel {
+    padding: 0.95rem;
+  }
+
+  .about__content h2 {
+    font-size: 1.08rem;
   }
 }

@@ -3,21 +3,66 @@
 <head>
   <%- include("./partials/head") %>
   <title>404 - Zipply</title>
+  <link rel="stylesheet" href="/css/404.css" />
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body>
   <%- include("./partials/nav") %>
 
-  <main class="container text-center my-5 flex-grow-1">
-    <h1 class="display-4 text-danger mb-3"> <i class="bi bi-exclamation-triangle-fill me-2"></i>404 - Not Found</h1>
+  <main class="error404 container">
+    <% const pageNotFoundType = typeof notFoundType === "string" ? notFoundType : "short-url"; %>
+    <% const isQRNotFound = pageNotFoundType === "qr"; %>
 
-    <% if (typeof message !== "undefined") { %>
-      <p class="lead"><%= message %></p>
-    <% } else { %>
-      <p class="lead">The short URL you are trying to access does not exist, has expired, or was deleted.</p>
-    <% } %>
+    <div class="page-back-nav">
+      <a href="/" class="page-back-link"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
+    </div>
 
-    <a href="/" class="btn btn-outline-primary mt-4">← Go Back Home</a>
-    <div style="height: 20vh;"></div>
+    <section class="error404__hero">
+      <p class="error404__eyebrow">Page not found</p>
+      <h1 class="error404__title"><%= isQRNotFound ? "This QR link is unavailable right now." : "This short link is unavailable right now." %></h1>
+      <p class="error404__subtitle">
+        <% if (typeof message !== "undefined" && message) { %>
+          <%= message %>
+        <% } else { %>
+          <%= isQRNotFound
+            ? "The QR may be deleted, expired, or typed incorrectly. Try generating a fresh QR from your workspace."
+            : "The URL may be expired, deleted, or typed incorrectly. Try creating a fresh short URL from your dashboard." %>
+        <% } %>
+      </p>
+      <p class="error404__ist-clock" data-ist-clock>IST: --</p>
+    </section>
+
+    <section class="error404__panel page-panel" aria-labelledby="error404-actions-title">
+      <div class="error404__code-chip">
+        <% if (isQRNotFound) { %>
+          <i class="bi bi-qr-code"></i>
+          <span>QR Not Found</span>
+        <% } else { %>
+          <i class="bi bi-link-45deg"></i>
+          <span>Short URL Not Found</span>
+        <% } %>
+      </div>
+
+      <h2 id="error404-actions-title" class="error404__heading">Choose your next step</h2>
+      <p class="error404__text"><%= isQRNotFound ? "Head back to your QR workspace or return to your dashboard in one click." : "Head back to your workspace or create a new short URL in one click." %></p>
+
+      <div class="error404__actions">
+        <% if (isQRNotFound) { %>
+          <a class="btn btn-primary" href="/qr">
+            <i class="bi bi-qr-code"></i>
+            Back to QR Workspace
+          </a>
+        <% } else { %>
+          <a class="btn btn-primary" href="/short-url">
+            <i class="bi bi-link-45deg"></i>
+            Create Short URL
+          </a>
+        <% } %>
+        <a class="btn btn-outline-info" href="/">
+          <i class="bi bi-house"></i>
+          Go to Dashboard
+        </a>
+      </div>
+    </section>
   </main>
 
   <%- include("./partials/footer") %>
