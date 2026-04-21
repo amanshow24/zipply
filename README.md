@@ -42,7 +42,7 @@ Backend
 
 Services and Libraries
 - Razorpay for payment processing
-- Brevo API for OTP email delivery
+- Brevo API for OTP, account validation, and subscription confirmation emails
 - qrcode for QR image generation
 - bcryptjs for password hashing
 - jsonwebtoken for auth token creation/verification
