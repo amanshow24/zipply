@@ -7,6 +7,15 @@ const {
   getExpiredSubscriptionPatch,
 } = require("../utils/subscription");
 
+const isHttpUrl = (value) => {
+  try {
+    const parsed = new globalThis.URL(value);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch (_error) {
+    return false;
+  }
+};
+
 async function handleGenerateNewShortURL(req, res) {
   const { url, custom, expiry } = req.body;
   const baseUrl = req.protocol + "://" + req.get("host");
@@ -19,6 +28,17 @@ async function handleGenerateNewShortURL(req, res) {
 
   if (!url) {
     return res.status(400).json({ error: "URL is required" });
+  }
+
+  if (!isHttpUrl(url.trim())) {
+    return res.render("home", {
+      error: "Please enter a valid http or https URL.",
+      formData,
+      todayIST,
+      urls: await URL.find({ createdBy: req.user._id }),
+      user: req.user,
+      baseUrl,
+    });
   }
 
   const userDoc = await User.findById(req.user._id).select("subscription").lean();
