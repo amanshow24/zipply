@@ -52,6 +52,18 @@ function maskEmail(email = "") {
   return `${visibleLocal}@${domain}`;
 }
 
+async function isStoredPasswordValid(password, storedPassword) {
+  if (!storedPassword) {
+    return false;
+  }
+
+  if (storedPassword.startsWith("$2")) {
+    return bcrypt.compare(password, storedPassword);
+  }
+
+  return password === storedPassword;
+}
+
 function buildOtpEmailHtml(name, otp) {
   const safeName = (name || "there").trim();
   const logoBlock = BRAND_LOGO_URL
@@ -652,6 +664,10 @@ async function handleUserLogin(req, res) {
       });
     }
 
+    const now = new Date();
+    user.lastLoginAt = now;
+    await user.save();
+
     const token = setUser(user);
     res.cookie("token", token);
     return res.redirect("/");
@@ -662,6 +678,43 @@ async function handleUserLogin(req, res) {
       user: null,
     });
   }
+}
+
+async function handleChangePassword(req, res) {
+  if (!req.user) {
+    return res.redirect("/login");
+  }
+
+  const currentPassword = req.body?.currentPassword || "";
+  const newPassword = req.body?.newPassword || "";
+  const confirmPassword = req.body?.confirmPassword || "";
+
+  if (!currentPassword || !newPassword || !confirmPassword) {
+    return res.redirect("/profile?passwordError=missing");
+  }
+
+  if (newPassword.length < 4) {
+    return res.redirect("/profile?passwordError=length");
+  }
+
+  if (newPassword !== confirmPassword) {
+    return res.redirect("/profile?passwordError=mismatch");
+  }
+
+  const user = await User.findById(req.user._id).select("password");
+  if (!user) {
+    return res.redirect("/login");
+  }
+
+  const isCurrentPasswordValid = await isStoredPasswordValid(currentPassword, user.password);
+  if (!isCurrentPasswordValid) {
+    return res.redirect("/profile?passwordError=current");
+  }
+
+  user.password = await bcrypt.hash(newPassword, 10);
+  await user.save();
+
+  return res.redirect("/profile?passwordChanged=true");
 }
 
 async function handleVerifyEmailPage(req, res) {
@@ -828,6 +881,7 @@ async function handleVerifyEmailOtp(req, res) {
 module.exports = {
   handleUserSignup,
   handleUserLogin,
+  handleChangePassword,
   handleVerifyEmailPage,
   handleVerifyEmailOtp,
 };

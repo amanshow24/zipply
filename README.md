@@ -11,7 +11,10 @@ https://zipply.onrender.com/
 - User authentication with JWT-based session cookie
 - Signup with email OTP verification using Brevo
 - Login and logout flow with protected routes
+- Self-only profile page with last login tracking
+- Change password flow from the profile page
 - Create short URLs with optional custom alias
+- Server-side validation for destination URLs
 - Expiry date support for shortened links
 - Redirect analytics with visit history and user agent tracking
 - QR code generation for URL and plain text input
@@ -171,6 +174,7 @@ User routes
 - POST /user
 - POST /user/login
 - POST /user/verify-email
+- POST /user/change-password
 - GET /user/logout
 
 Payment routes
@@ -192,6 +196,9 @@ Health route
 - Signup creates a pending account first and sends a 6-digit OTP by email.
 - OTP is hashed, time-limited, and protected by failed-attempt lockout.
 - Account is created only after successful OTP verification.
+- The profile page is protected by the authenticated session and only reads the current user's data.
+- Last login time is stored on successful login and displayed on the profile page.
+- Password changes are verified against the current password before updating the stored hash.
 
 ## Scripts
 

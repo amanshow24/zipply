@@ -105,6 +105,36 @@
   max-width: 270px;
 }
 
+.app-nav__profile-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.app-nav__profile-link {
+  width: 2.65rem;
+  height: 2.65rem;
+  padding: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--clr-primary) !important;
+  background: rgba(26, 115, 232, 0.09);
+  border: 1px solid rgba(26, 115, 232, 0.18);
+  box-shadow: var(--shadow-sm);
+}
+
+.app-nav__profile-link i {
+  font-size: 1.15rem;
+}
+
+.app-nav__profile-link:hover,
+.app-nav__profile-link:focus {
+  background: rgba(26, 115, 232, 0.14);
+  color: var(--clr-primary-hover) !important;
+  border-color: rgba(26, 115, 232, 0.26);
+  transform: translateY(-1px);
+}
+
 .app-nav__user-chip {
   display: inline-flex;
   align-items: center;
@@ -171,6 +201,10 @@
 
   .app-nav__user-item {
     max-width: 100%;
+  }
+
+  .app-nav__profile-item {
+    width: 100%;
   }
 }
 

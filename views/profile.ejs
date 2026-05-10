@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <%- include("./partials/head") %>
+  <title>Profile - Zipply</title>
+  <link rel="stylesheet" href="/css/profile.css" />
+</head>
+<body>
+  <%- include("./partials/nav") %>
+
+  <main class="profile-shell">
+    <div class="page-back-nav">
+      <a href="/" class="page-back-link"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
+    </div>
+
+    <section class="profile-grid">
+      <article class="profile-card surface-card">
+        <div class="profile-card__header">
+          <div>
+            <p class="profile-card__eyebrow">Account details</p>
+            <h2 class="profile-card__title">Profile summary</h2>
+          </div>
+          <span class="profile-badge"><i class="bi bi-person-check"></i> Private</span>
+        </div>
+
+        <dl class="profile-details">
+          <div class="profile-details__item">
+            <dt>Name</dt>
+            <dd><%= profile.name %></dd>
+          </div>
+          <div class="profile-details__item">
+            <dt>Email</dt>
+            <dd><%= profile.email %></dd>
+          </div>
+          <div class="profile-details__item">
+            <dt>Role</dt>
+            <dd><%= profile.role %></dd>
+          </div>
+          <div class="profile-details__item">
+            <dt>Member since</dt>
+            <dd><%= profile.joinedAt %></dd>
+          </div>
+          <div class="profile-details__item profile-details__item--wide">
+            <dt>Last login</dt>
+            <dd><%= profile.lastLoginAt %></dd>
+          </div>
+        </dl>
+
+        <div class="profile-security">
+          <div class="profile-security__header">
+            <div>
+              <p class="profile-security__eyebrow">Security</p>
+              <h3 class="profile-security__title">Change password</h3>
+            </div>
+            <span class="profile-security__badge"><i class="bi bi-lock"></i> Private</span>
+          </div>
+
+          <% if (typeof passwordChangeSuccess !== "undefined" && passwordChangeSuccess) { %>
+            <div class="profile-security__alert profile-security__alert--success"><%= passwordChangeSuccess %></div>
+          <% } %>
+
+          <% if (typeof passwordChangeError !== "undefined" && passwordChangeError) { %>
+            <div class="profile-security__alert profile-security__alert--error"><%= passwordChangeError %></div>
+          <% } %>
+
+          <form class="profile-security__form" action="/user/change-password" method="POST">
+            <div class="profile-security__field profile-security__field--wide">
+              <label for="currentPassword" class="profile-security__label">Current password</label>
+              <input type="password" id="currentPassword" name="currentPassword" class="form-control profile-security__input" autocomplete="current-password" required />
+            </div>
+
+            <div class="profile-security__field">
+              <label for="newPassword" class="profile-security__label">New password</label>
+              <input type="password" id="newPassword" name="newPassword" class="form-control profile-security__input" autocomplete="new-password" minlength="4" required />
+            </div>
+
+            <div class="profile-security__field">
+              <label for="confirmPassword" class="profile-security__label">Confirm new password</label>
+              <input type="password" id="confirmPassword" name="confirmPassword" class="form-control profile-security__input" autocomplete="new-password" minlength="4" required />
+            </div>
+
+            <div class="profile-security__actions">
+              <button type="submit" class="btn btn-primary profile-security__button">Update password</button>
+            </div>
+          </form>
+        </div>
+      </article>
+
+      <article class="profile-card profile-card--accent surface-card">
+        <div class="profile-card__header">
+          <div>
+            <p class="profile-card__eyebrow">Plan & usage</p>
+            <h2 class="profile-card__title">Your current limits</h2>
+          </div>
+          <span class="profile-badge profile-badge--muted"><i class="bi bi-graph-up-arrow"></i> Live</span>
+        </div>
+
+        <div class="profile-plan-grid">
+          <div class="profile-plan-box">
+            <span class="profile-plan-box__value"><%= planLabel %></span>
+            <span class="profile-plan-box__label">Current plan</span>
+          </div>
+          <div class="profile-plan-box">
+            <span class="profile-plan-box__value"><%= planLimits.shortUrls %></span>
+            <span class="profile-plan-box__label">Short URLs per day</span>
+          </div>
+          <div class="profile-plan-box">
+            <span class="profile-plan-box__value"><%= planLimits.qrCodes %></span>
+            <span class="profile-plan-box__label">QR codes per day</span>
+          </div>
+          <div class="profile-plan-box">
+            <span class="profile-plan-box__value"><%= usage.shortUrlCount %> / <%= usage.qrCount %></span>
+            <span class="profile-plan-box__label">Today’s usage</span>
+          </div>
+        </div>
+
+        <div class="profile-note">
+          <p><i class="bi bi-shield-check"></i> Your plan and usage are always loaded from your authenticated account.</p>
+          <% if (profile.expiresAt) { %>
+            <p><i class="bi bi-calendar2-week"></i> Current subscription expiry: <strong><%= profile.expiresAt %> (IST)</strong></p>
+          <% } else { %>
+            <p><i class="bi bi-calendar2-week"></i> No active paid subscription expiry is set right now.</p>
+          <% } %>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <%- include("./partials/footer") %>
+  <%- include("./partials/scripts") %>
+</body>
+</html>

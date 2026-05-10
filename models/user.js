@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       default: "NORMAL",
     },
+    lastLoginAt: {
+      type: Date,
+      default: null,
+    },
     subscription: {
       plan: {
         type: String,

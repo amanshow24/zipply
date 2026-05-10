@@ -89,6 +89,119 @@ router.get("/billing", async (req, res) => {
   });
 });
 
+router.get("/profile", async (req, res) => {
+  if (!req.user) {
+    return res.redirect("/login");
+  }
+
+  const profileUser = await User.findById(req.user._id)
+    .select("name email role subscription createdAt lastLoginAt")
+    .lean();
+
+  if (!profileUser) {
+    return res.redirect("/login");
+  }
+
+  const expiredPatch = getExpiredSubscriptionPatch(profileUser.subscription || {});
+  if (expiredPatch) {
+    await User.updateOne({ _id: req.user._id }, { $set: expiredPatch });
+    profileUser.subscription = {
+      ...(profileUser.subscription || {}),
+      plan: "NORMAL",
+      status: "EXPIRED",
+    };
+  }
+
+  const userLinks = await URL.find({ createdBy: req.user._id })
+    .select("expiryDate visitHistory")
+    .lean();
+
+  const nowEpoch = Date.now();
+  const linkStats = userLinks.reduce(
+    (stats, link) => {
+      const expiryEpoch = link.expiryDate ? new Date(link.expiryDate).getTime() : null;
+      const isExpired = Boolean(expiryEpoch && nowEpoch > expiryEpoch);
+
+      stats.totalLinks += 1;
+      stats.totalClicks += Array.isArray(link.visitHistory) ? link.visitHistory.length : 0;
+
+      if (isExpired) {
+        stats.expiredLinks += 1;
+      } else {
+        stats.activeLinks += 1;
+      }
+
+      return stats;
+    },
+    { totalLinks: 0, totalClicks: 0, activeLinks: 0, expiredLinks: 0 }
+  );
+
+  const effectivePlan = getEffectivePlan({ subscription: profileUser.subscription || {} });
+  const usage = getUsageForToday(profileUser.subscription || {});
+  const joinedAt = profileUser.createdAt
+    ? new Date(profileUser.createdAt).toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        dateStyle: "medium",
+        timeStyle: "short",
+      })
+    : "Unknown";
+
+  const lastLoginAt = profileUser.lastLoginAt
+    ? new Date(profileUser.lastLoginAt).toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        dateStyle: "medium",
+        timeStyle: "short",
+      })
+    : "Not available yet";
+
+  const expiresAt = profileUser.subscription?.expiresAt
+    ? new Date(profileUser.subscription.expiresAt).toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        dateStyle: "medium",
+        timeStyle: "short",
+      })
+    : null;
+
+  const profileName = (profileUser.name || req.user.name || "User").trim();
+  const profileEmail = profileUser.email || req.user.email || "";
+  const initials = profileName
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() || "")
+    .join("") || "U";
+
+  return res.render("profile", {
+    user: req.user,
+    profile: {
+      name: profileName,
+      email: profileEmail,
+      role: profileUser.role || "NORMAL",
+      joinedAt,
+      lastLoginAt,
+      initials,
+      expiresAt,
+    },
+    currentPlan: effectivePlan,
+    planLabel: getPlanLabel(effectivePlan),
+    planLimits: getPlanLimits(effectivePlan),
+    subscription: profileUser.subscription || {},
+    usage,
+    stats: linkStats,
+    passwordChangeSuccess: req.query.passwordChanged === "true" ? "Password updated successfully." : null,
+    passwordChangeError:
+      req.query.passwordError === "missing"
+        ? "Please fill in all password fields."
+        : req.query.passwordError === "length"
+          ? "New password must be at least 4 characters long."
+          : req.query.passwordError === "mismatch"
+            ? "New password and confirm password do not match."
+            : req.query.passwordError === "current"
+              ? "Current password is incorrect."
+              : null,
+  });
+});
+
 // View More Page
 router.get("/view/:shortId", async (req, res) => {
   const { shortId } = req.params;
