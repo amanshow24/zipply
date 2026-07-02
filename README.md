@@ -1,6 +1,6 @@
 # Zipply
 
-Zipply is a full-stack URL shortener and QR code platform built with Node.js, Express, MongoDB, and EJS. It supports short link creation, QR generation, authentication, analytics, billing, plan-based usage limits, and Redis-backed caching for fast lookups.
+Zipply is a full-stack URL shortener and QR code platform built with Node.js, Express, MongoDB, and EJS. It supports short link creation, QR generation, authentication, analytics, billing, plan-based usage limits, Rate limiting and Redis-backed caching for fast lookups.
 
 Live demo: https://zipply.onrender.com/
 
@@ -14,6 +14,8 @@ Live demo: https://zipply.onrender.com/
 - Billing flow with Razorpay test-mode integration
 - Subscription plans with daily usage limits
 - Redis read-through cache for public short URL and QR resolution
+- Redis-backed rate limiting for login and signup pages
+- Rate limits are applied per client IP address
 - Security middleware with Helmet and Mongo sanitation
 
 ## Tech Stack
@@ -61,6 +63,9 @@ Cache behavior:
 - MongoDB remains the source of truth.
 - Redis stores redirect target and expiry metadata.
 - Redis also stores QR resolver payloads.
+- Redis also stores short-lived login and signup rate-limit counters.
+- Rate-limit counters are keyed by client IP address.
+- Rate-limit counters expire automatically after 10 minutes.
 - TTL is used to avoid keeping cold keys forever.
 
 ### 3. Configure environment variables

@@ -6,14 +6,17 @@ const {
   handleVerifyEmailOtp,
 } = require("../controllers/user");
 const {
-  signupRateLimit,
   verifyOtpRateLimit,
 } = require("../middlewares/rateLimit/authOtp");
+const {
+  loginRateLimit,
+  signupRateLimit,
+} = require("../service/redis/authRateLimit");
 
 const router = express.Router();
 
 router.post("/", signupRateLimit, handleUserSignup);
-router.post("/login", handleUserLogin);
+router.post("/login", loginRateLimit, handleUserLogin);
 router.post("/verify-email", verifyOtpRateLimit, handleVerifyEmailOtp);
 router.post("/change-password", handleChangePassword);
 

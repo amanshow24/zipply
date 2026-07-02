@@ -13,6 +13,8 @@ Redis is used as a read-through cache for public short URLs, public QR resolvers
 - Invalidates cache entries when a URL or QR entry is deleted.
 - Primes the cache when new data is created.
 - Reduces repeated analytics writes with a short duplicate-hit window.
+- Limits login and signup attempts with Redis counters and TTL.
+- Login and signup counters are keyed by client IP address, not email.
 
 ## Files
 
@@ -39,6 +41,13 @@ Redis is used as a read-through cache for public short URLs, public QR resolvers
 - Keeps a short dedupe key for repeated hits.
 - Prevents rapid duplicate analytics writes from the same short URL and user-agent.
 - Uses a 2 second lock window.
+
+### `authRateLimit.js`
+
+- Rate limits login requests to 5 per 10 minutes.
+- Rate limits signup requests to 3 per 10 minutes.
+- Uses the client IP address as the rate-limit key.
+- Renders the login or signup page with a friendly 429 error instead of crashing.
 
 ### `index.js`
 

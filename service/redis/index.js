@@ -6,6 +6,10 @@ const {
   setCachedShortUrl,
 } = require("./shortUrlCache");
 const {
+  loginRateLimit,
+  signupRateLimit,
+} = require("./authRateLimit");
+const {
   deleteCachedQr,
   getCachedQr,
   getQrCacheKey,
@@ -27,7 +31,9 @@ module.exports = {
   getShortUrlCacheKey,
   getQrCacheKey,
   getVisitDedupKey,
+  loginRateLimit,
   setCachedShortUrl,
   setCachedQr,
+  signupRateLimit,
   shouldTrackVisit,
 };
