@@ -6,7 +6,7 @@ const axios = require("axios");
 const User = require("../models/user");
 const PendingSignup = require("../models/pendingSignup");
 const OtpAudit = require("../models/otpAudit");
-const { setUser } = require("../service/auth");
+const { setUser, getTokenCookieOptions } = require("../service/auth");
 
 const OTP_LENGTH = 6;
 const OTP_EXPIRY_MS = 5 * 60 * 1000;
@@ -669,7 +669,7 @@ async function handleUserLogin(req, res) {
     await user.save();
 
     const token = setUser(user);
-    res.cookie("token", token);
+    res.cookie("token", token, getTokenCookieOptions());
     return res.redirect("/");
   } catch (err) {
     console.error("Login error:", err);
@@ -866,7 +866,7 @@ async function handleVerifyEmailOtp(req, res) {
     clearPendingSignupCookie(res);
 
     const token = setUser(createdUser);
-    res.cookie("token", token);
+    res.cookie("token", token, getTokenCookieOptions());
     return res.redirect("/");
   } catch (error) {
     console.error("OTP verify error:", error);

@@ -7,6 +7,7 @@ Live demo: https://zipply.onrender.com/
 ## Features
 
 - JWT-based authentication with protected routes
+- Persistent login sessions (until logout or cookie expiry)
 - Email OTP signup flow with pending account verification
 - Short URL creation with optional custom aliases and expiry dates
 - Redirect analytics with visit history tracking
@@ -90,6 +91,10 @@ RAZORPAY_KEY_SECRET=your_razorpay_key_secret
 
 UPSTASH_REDIS_REST_URL=your_redis_url
 UPSTASH_REDIS_REST_TOKEN=your_redis_token
+
+# Optional auth session settings
+AUTH_TOKEN_TTL_DAYS=7
+AUTH_COOKIE_MAX_AGE_DAYS=7
 ```
 
 ## Plan Limits

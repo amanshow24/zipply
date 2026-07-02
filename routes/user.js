@@ -22,7 +22,7 @@ router.post("/change-password", handleChangePassword);
 
 
 router.get("/logout", (req, res) => {
-  res.clearCookie("token");
+  res.clearCookie("token", { path: "/" });
   return res.redirect("/login");
 });
 
