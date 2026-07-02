@@ -8,6 +8,7 @@ const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
 
 const { checkForAuthentication } = require("./middlewares/auth");
+const { getCachedShortUrl, setCachedShortUrl, shouldTrackVisit, deleteCachedShortUrl } = require("./service/redis");
 
 const URL = require("./models/url");
 const urlRoute = require("./routes/url");
@@ -91,7 +92,13 @@ app.get("/url/:shortId", async (req, res) => {
   const { shortId } = req.params;
   if (shortId === "favicon.ico") return res.status(204).end();
 
-  const entry = await URL.findOne({ shortId });
+  const cachedEntry = await getCachedShortUrl(shortId);
+
+  let entry = cachedEntry;
+  if (!entry) {
+    entry = await URL.findOne({ shortId }).select("shortId redirectURL expiryDate");
+  }
+
   if (!entry) {
     return res.status(404).render("404", {
       user: req.user,
@@ -100,8 +107,13 @@ app.get("/url/:shortId", async (req, res) => {
     });
   }
 
+  if (!cachedEntry) {
+    void setCachedShortUrl(entry);
+  }
+
   const expiryEpoch = entry.expiryDate ? new Date(entry.expiryDate).getTime() : null;
   if (expiryEpoch && Date.now() > expiryEpoch) {
+    void deleteCachedShortUrl(shortId);
     return res.status(410).render("404", {
       user: req.user,
       message: "This short URL has expired.",
@@ -112,29 +124,18 @@ app.get("/url/:shortId", async (req, res) => {
   const userAgent = req.get("User-Agent") || "Unknown";
   const isBot = /bot|crawl|spider|fetch|facebookexternalhit|favicon/i.test(userAgent);
 
-  if (!isBot) {
-    const lastVisit = entry.visitHistory[entry.visitHistory.length - 1];
-    const now = Date.now();
-    const lastTimestamp = lastVisit ? new Date(lastVisit.timestamp).getTime() : 0;
-
-    const isDuplicate =
-      lastVisit &&
-      userAgent === lastVisit.userAgent &&
-      now - lastTimestamp < 4000;
-
-    if (!isDuplicate) {
-      await URL.updateOne(
-        { shortId },
-        {
-          $push: {
-            visitHistory: {
-              timestamp: new Date(),
-              userAgent,
-            },
+  if (!isBot && await shouldTrackVisit(shortId, userAgent)) {
+    await URL.updateOne(
+      { shortId },
+      {
+        $push: {
+          visitHistory: {
+            timestamp: new Date(),
+            userAgent,
           },
-        }
-      );
-    }
+        },
+      }
+    );
   }
 
   return res.redirect(entry.redirectURL);

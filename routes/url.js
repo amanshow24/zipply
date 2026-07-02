@@ -1,5 +1,6 @@
 const express = require("express");
 const URL = require("../models/url");
+const { deleteCachedShortUrl } = require("../service/redis");
 const { restrictTo, checkForAuthentication } = require("../middlewares/auth");
 
 const {
@@ -26,6 +27,7 @@ router.post("/delete/:id", checkForAuthentication, restrictTo(["NORMAL"]), async
   }
 
   await URL.deleteOne({ _id: id });
+  void deleteCachedShortUrl(url.shortId);
   return res.redirect("/short-url");
 });
 

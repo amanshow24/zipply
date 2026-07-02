@@ -2,6 +2,11 @@ const express = require("express");
 const QRCode = require("qrcode");
 const shortid = require("shortid");
 const { restrictTo } = require("../middlewares/auth");
+const {
+  deleteCachedQr,
+  getCachedQr,
+  setCachedQr,
+} = require("../service/redis");
 const User = require("../models/user");
 const QR = require("../models/qr");
 const {
@@ -103,6 +108,12 @@ router.post("/", restrictTo(["NORMAL"]), async (req, res) => {
       dataType,
     });
 
+    void setCachedQr({
+      resolverId,
+      text: normalizedText,
+      dataType,
+    });
+
     await User.updateOne(
       { _id: req.user._id },
       {
@@ -133,13 +144,19 @@ router.post("/", restrictTo(["NORMAL"]), async (req, res) => {
 router.get("/r/:resolverId", async (req, res) => {
   const { resolverId } = req.params;
 
-  const qrEntry = await QR.findOne({ resolverId });
+  const cachedQr = await getCachedQr(resolverId);
+  const qrEntry = cachedQr || await QR.findOne({ resolverId }).select("text dataType resolverId");
+
   if (!qrEntry) {
     return res.status(404).render("404", {
       user: req.user,
       message: "This QR code is invalid or has been removed.",
       notFoundType: "qr",
     });
+  }
+
+  if (!cachedQr) {
+    void setCachedQr(qrEntry);
   }
 
   if (qrEntry.dataType === "url" && isHttpUrl(qrEntry.text)) {
@@ -157,7 +174,17 @@ router.post("/delete/:id", restrictTo(["NORMAL"]), async (req, res) => {
   const { id } = req.params;
 
   try {
-    await QR.deleteOne({ _id: id, createdBy: req.user._id });
+    const qrEntry = await QR.findOne({ _id: id });
+    if (!qrEntry) {
+      return res.redirect("/qr");
+    }
+
+    const deleteResult = await QR.deleteOne({ _id: id, createdBy: req.user._id });
+    if (!deleteResult.deletedCount) {
+      return res.redirect("/qr");
+    }
+
+    void deleteCachedQr(qrEntry.resolverId);
     return res.redirect("/qr");
   } catch (err) {
     console.error("Error deleting QR:", err);
