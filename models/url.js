@@ -28,6 +28,34 @@ const urlSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
+
+    aiInsights: {
+      status: {
+        type: String,
+        enum: ["pending", "processing", "completed", "failed"],
+        default: "pending",
+      },
+      summary: {
+        type: String,
+        default: "",
+      },
+      category: {
+        type: String,
+        default: "",
+      },
+      analyzedAt: {
+        type: Date,
+        default: null,
+      },
+      attempts: {
+        type: Number,
+        default: 0,
+      },
+      error: {
+        type: String,
+        default: "",
+      },
+    },
   },
   { timestamps: true }
 );

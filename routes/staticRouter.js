@@ -3,6 +3,7 @@ const { restrictTo } = require("../middlewares/auth");
 const URL = require("../models/url");
 const Payment = require("../models/payment");
 const User = require("../models/user");
+const { analyzeUrlInsights } = require("../service/urlInsights");
 const { getISTDateString } = require("../utils/istTime");
 const { handleVerifyEmailPage } = require("../controllers/user");
 const {
@@ -35,6 +36,32 @@ router.get("/", restrictTo(["NORMAL"]), async (req, res) => {
 
 router.get("/short-url", restrictTo(["NORMAL"]), async (req, res) => {
   const allurls = await URL.find({ createdBy: req.user._id });
+  const staleThreshold = new Date(Date.now() - 2 * 60 * 1000);
+  const staleInsightIds = allurls
+    .filter((url) => url.aiInsights?.status === "processing" && url.updatedAt < staleThreshold)
+    .map((url) => url._id);
+
+  if (staleInsightIds.length > 0) {
+    await URL.updateMany(
+      { _id: { $in: staleInsightIds } },
+      { $set: { "aiInsights.status": "pending", "aiInsights.error": "" } }
+    );
+  }
+
+  allurls
+    .filter((url) => {
+      const status = url.aiInsights?.status;
+      const attempts = Number(url.aiInsights?.attempts || 0);
+      return (
+        status === "pending" ||
+        staleInsightIds.some((id) => id.equals(url._id)) ||
+        (status === "failed" && attempts < 2)
+      );
+    })
+    .forEach((url) => {
+      void analyzeUrlInsights({ urlId: url._id, destinationUrl: url.redirectURL });
+    });
+
   const baseUrl = req.protocol + "://" + req.get("host");
   return res.render("home", {
     urls: allurls,

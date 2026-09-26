@@ -27,7 +27,10 @@
         <h2>1. What Zipply Does</h2>
         <p>Zipply allows you to create shortened URLs, generate QR codes, monitor click analytics, and manage link history from a single account. Every action is designed for speed and simplicity.</p>
 
-        <h2>2. Plans That Match Real Usage</h2>
+        <h2>2. AI URL Insights</h2>
+        <p>When a short link is created, Zipply can analyze its public destination page using Google Gemini. The backend extracts limited page metadata and text, requests a concise two-sentence summary and category, and stores the result in MongoDB while keeping short-link creation and redirects independent of AI processing.</p>
+
+        <h2>3. Plans That Match Real Usage</h2>
         <p>Zipply currently offers three plans:</p>
         <ul>
           <li><strong>Normal (Free):</strong> 3 short URLs + 2 QR codes per day</li>
@@ -36,19 +39,19 @@
         </ul>
         <p>Usage limits reset daily at midnight IST so tracking remains consistent for all users.</p>
 
-        <h2>3. Built for Current Workflow</h2>
+        <h2>4. Built for Current Workflow</h2>
         <p>The platform includes email OTP verification, secure JWT authentication, click tracking, QR history, and dashboard-level usage visibility so users can understand performance without extra tools.</p>
 
-        <h2>4. Tech Stack</h2>
-        <p>Zipply is built with Node.js, Express, MongoDB, EJS, and Bootstrap, with Razorpay integration for plan upgrades.</p>
+        <h2>5. Tech Stack</h2>
+        <p>Zipply is built with Node.js, Express, MongoDB, EJS, and Bootstrap, with Google Gemini for URL insights and Razorpay integration for plan upgrades.</p>
 
-        <h2>5. Security & Privacy</h2>
-        <p>Passwords are hashed, sessions are token-based, and user data is protected through secure backend validation and access control.</p>
+        <h2>6. Security & Privacy</h2>
+        <p>Passwords are hashed, sessions are token-based, and user data is protected through secure backend validation and access control. AI analysis uses limited destination-page context and does not affect the short-link redirect flow.</p>
 
-        <h2>6. Mission</h2>
+        <h2>7. Mission</h2>
         <p>Our goal is to provide a reliable link and QR platform that stays easy for beginners but powerful enough for real production use.</p>
 
-        <h2>7. Contact</h2>
+        <h2>8. Contact</h2>
         <p>For feedback, support, or collaboration, connect via:</p>
         <ul>
           <li>Email: <a href="mailto:amanshow9800@gmail.com">amanshow9800@gmail.com</a></li>
@@ -56,7 +59,7 @@
           <li><a href="https://github.com/amanshow24" target="_blank">GitHub</a></li>
         </ul>
 
-        <p class="about__footer"><strong>Built by:</strong> Aman Show. <strong>Last updated:</strong> April 2026.</p>
+        <p class="about__footer"><strong>Built by:</strong> Aman Show. <strong>Last updated:</strong> September 2026.</p>
       </div>
     </section>
   </main>

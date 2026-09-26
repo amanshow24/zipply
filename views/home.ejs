@@ -161,6 +161,7 @@
               <th>Destination URL</th>
               <th>Short ID</th>
               <th>Clicks</th>
+              <th>AI category</th>
               <th>Expiry</th>
             </tr>
           </thead>
@@ -173,6 +174,7 @@ const expiryDateIST = expiryDate ? expiryDate.toLocaleString("en-IN", {
   day: "numeric", month: "long", year: "numeric"
 }) : null;
 const shortLink = `${baseUrl}/url/${url.shortId}`;
+             const aiInsights = url.aiInsights || {};
             %>
               <tr
                 class="home__url-row"
@@ -203,6 +205,15 @@ const shortLink = `${baseUrl}/url/${url.shortId}`;
                       <button type="submit" class="btn btn-outline-danger btn-sm delete-btn">Delete</button>
                     </form>
                   </div>
+                </td>
+                <td class="home__insights-cell">
+                  <% if (aiInsights.status === "completed") { %>
+                    <span class="home__insights-category"><%= aiInsights.category %></span>
+                  <% } else if (aiInsights.status === "processing" || aiInsights.status === "pending") { %>
+                    <span class="text-muted">Analyzing...</span>
+                  <% } else { %>
+                    <span class="text-muted">Unavailable</span>
+                  <% } %>
                 </td>
                 <td class="home__expiry-cell">
               <% if (expiryDateIST) { %>

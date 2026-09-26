@@ -100,6 +100,38 @@
         </div>
       </section>
 
+      <section class="view__insights-section page-panel">
+        <% const aiInsights = url.aiInsights || {}; %>
+        <div class="view__section-head">
+          <div>
+            <h4 class="view__subheading">AI URL Insights</h4>
+            <p class="view__muted">A generated summary and category for this destination.</p>
+          </div>
+          <% if (aiInsights.status === "completed") { %>
+            <span class="view__insights-status view__insights-status--complete">Ready</span>
+          <% } else if (aiInsights.status === "processing" || aiInsights.status === "pending") { %>
+            <span class="view__insights-status">Analyzing</span>
+          <% } else { %>
+            <span class="view__insights-status view__insights-status--failed">Unavailable</span>
+          <% } %>
+        </div>
+
+        <% if (aiInsights.status === "completed") { %>
+          <div class="view__insights-content">
+            <div>
+              <span class="view__detail-label">Category</span>
+              <span class="view__insights-category"><%= aiInsights.category %></span>
+            </div>
+            <div>
+              <span class="view__detail-label">Summary</span>
+              <p class="view__insights-summary"><%= aiInsights.summary %></p>
+            </div>
+          </div>
+        <% } else { %>
+          <p class="view__muted">Insights will appear here after the destination page is analyzed.</p>
+        <% } %>
+      </section>
+
       <section class="view__history-section page-panel">
         <div class="view__section-head">
           <h4 class="view__subheading">Click History</h4>

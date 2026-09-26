@@ -1,6 +1,7 @@
 const shortid = require("shortid");
 const URL = require("../models/url");
 const User = require("../models/user");
+const { analyzeUrlInsights } = require("../service/urlInsights");
 const { setCachedShortUrl } = require("../service/redis");
 const { getISTDateString, getEndOfISTDayAsUTC } = require("../utils/istTime");
 const {
@@ -122,12 +123,17 @@ async function handleGenerateNewShortURL(req, res) {
     expiryDate = getEndOfISTDayAsUTC(trimmedExpiry);
   }
 
-  await URL.create({
+  const createdUrl = await URL.create({
     shortId,
     redirectURL: url,
     visitHistory: [],
     createdBy: req.user._id,
     expiryDate,
+  });
+
+  void analyzeUrlInsights({
+    urlId: createdUrl._id,
+    destinationUrl: url.trim(),
   });
 
   void setCachedShortUrl({

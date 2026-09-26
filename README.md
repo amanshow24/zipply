@@ -1,6 +1,6 @@
 # Zipply
 
-Zipply is a full-stack URL shortener and QR code platform built with Node.js, Express, MongoDB, and EJS. It supports short link creation, QR generation, authentication, analytics, billing, plan-based usage limits, Rate limiting and Redis-backed caching for fast lookups.
+Zipply is a full-stack URL shortener and QR code platform built with Node.js, Express, MongoDB, and EJS. It supports short link creation, QR generation, authentication, analytics, billing, plan-based usage limits, rate limiting, Redis-backed caching, and AI-powered URL insights.
 
 Live demo: https://zipply.onrender.com/
 
@@ -10,6 +10,7 @@ Live demo: https://zipply.onrender.com/
 - Persistent login sessions (until logout or cookie expiry)
 - Email OTP signup flow with pending account verification
 - Short URL creation with optional custom aliases and expiry dates
+- AI-generated two-sentence summaries and categories for destination URLs
 - Redirect analytics with visit history tracking
 - QR code generation for URLs and plain text
 - Billing flow with Razorpay test-mode integration
@@ -18,6 +19,14 @@ Live demo: https://zipply.onrender.com/
 - Redis-backed rate limiting for login and signup pages
 - Rate limits are applied per client IP address
 - Security middleware with Helmet and Mongo sanitation
+
+## AI URL Insights
+
+When a short URL is created, Zipply saves it immediately and starts AI analysis in the background. The backend fetches a limited amount of public HTML from the destination URL, extracts the page title, meta description, and readable text, then sends that context with a fixed prompt to the Google Gemini API.
+
+Gemini returns a two-sentence summary and one category from a controlled list: Technology, Finance, Education, Entertainment, News, Shopping, Health, Travel, Business, or Other. The result and analysis status are stored in MongoDB and shown on the short URL dashboard and details page.
+
+AI processing is independent of redirects. If a destination blocks access, is too large, or the Gemini request fails, the short URL still works normally and the analysis is marked unavailable or retried later. Redis continues to cache only redirect data and expiry metadata; AI insights remain in MongoDB.
 
 ## Tech Stack
 
@@ -47,6 +56,7 @@ Live demo: https://zipply.onrender.com/
 - helmet
 - express-mongo-sanitize
 - axios
+- Google Gemini API
 - shortid
 - uuid
 
@@ -89,6 +99,10 @@ FROM_EMAIL=your_verified_sender_email
 RAZORPAY_KEY_ID=your_razorpay_key_id
 RAZORPAY_KEY_SECRET=your_razorpay_key_secret
 
+GEMINI_API_KEY=your_gemini_api_key
+# Optional model override; the default is gemini-flash-lite-latest
+GEMINI_MODEL=gemini-flash-lite-latest
+
 UPSTASH_REDIS_REST_URL=your_redis_url
 UPSTASH_REDIS_REST_TOKEN=your_redis_token
 
@@ -111,6 +125,7 @@ AUTH_COOKIE_MAX_AGE_DAYS=7
 - `models/` - Mongoose schemas
 - `middlewares/` - authentication and rate-limiting middleware
 - `service/` - reusable service modules, including Redis and auth helpers
+- `service/urlInsights.js` - destination-page extraction and Gemini analysis
 - `utils/` - time and subscription helpers
 - `views/` - EJS templates
 - `public/` - static assets
